@@ -78,11 +78,9 @@ var lineBefore;
 function processIds(idInfo) {
 	lineBefore = document.getElementById(idInfo).value;
 	document.getElementById(idInfo).readOnly = false;
-	console.log("On focus sunt here")
 }
 
 function updateFile(id) {
-	console.log("On blur sunt here")
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var lineAfter;
@@ -90,27 +88,17 @@ function updateFile(id) {
 			var timeNow = new Date().getTime();
 			lineAfter = document.getElementById(id).value;
 
-//New Way to send
-	
 	$.ajax({
 		type : "POST",
 		url : "send-update",
 		contentType : "application/json",
-		data : {
+		data : JSON.stringify({
 			before : lineBefore,
 			after : lineAfter,
 			fileName : fileHidden.value,
 			time : timeNow
-		},
-		success : function(data, status) {
-			var localId = clickId;
-			document.getElementById(localId+"m").innerHTML = status;
-			$('#' + localId + 'h').removeClass('hr-primary').addClass('hr-success');
-	setTimeout(function() {
-			document.getElementById(localId+ "m").innerHTML = "";
-			$('#'+ localId+'h').removeClass('hr-success').addClass('hr-primary');
-	}, 1500);
-							},
+		}),
+		success : notificationSendSuccess(id),
 		dataType : "json",
 		
 		async : true,
@@ -123,8 +111,16 @@ function updateFile(id) {
 	
 }
 
+function notificationSendSuccess(id){
+	document.getElementById(id+"m").innerHTML = status;
+	$('#' + id + 'h').removeClass('hr-primary').addClass('hr-success');
+setTimeout(function() {
+	document.getElementById(id+ "m").innerHTML = "";
+	$('#'+ id+'h').removeClass('hr-success').addClass('hr-primary');
+}, 1500);
+}
+
 function updateFormsWithSocket(id){
-	console.log("On keyup sunt here")
 	var idAndLine = id+"+"+ document.getElementById(id).value;
 	socket.send(idAndLine);
 }

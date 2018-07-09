@@ -15,14 +15,7 @@ public class DemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
-	
-//	
-//	@Bean
-//	CommandLineRunner runner(AddingModuleRepository repo) {
-//		return args ->{
-//			repo.save(new AddingModule("Pagination", "PagEx1", "Describe pagination", "paginationex.html", "youtube.com", 5,"Name1,Name2,Name3,Name4,Name5"));
-//		};
-//	}
+
 	
 	@Bean
 	public Server h2Server() {
