@@ -1,13 +1,10 @@
 package app.config;
 
 import org.h2.tools.Server;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import app.config.model.AddingModule;
-import app.config.repository.AddingModuleRepository;
 
 @SpringBootApplication
 public class DemoApplication {
