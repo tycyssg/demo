@@ -1,0 +1,122 @@
+package app.config.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import app.config.dto.EditFileConfig;
+import app.config.dto.ModuleCreation;
+import app.config.dto.ParamSettings;
+import app.config.model.ModuleCreationDb;
+import app.config.model.ParamSettingsDb;
+import app.config.service.CreateModuleService;
+import app.config.service.ObjectsMapper;
+import app.config.service.TaskService;
+
+@Controller
+public class Controllers {
+
+	@Autowired
+	private TaskService taskService;
+
+	@Autowired
+	private CreateModuleService moduleService;
+
+	@Autowired
+	private ObjectsMapper objMapper;
+
+	@GetMapping("/")
+	public String home(HttpServletRequest request) {
+		taskService.getUserStatusAndName(request);
+		request.setAttribute("mode", "HOME");
+		return "index";
+	}
+
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+
+	@GetMapping("/register")
+	public String register() {
+		return "register";
+	}
+
+	@GetMapping("/createModule")
+	public String createModule(HttpServletRequest request) {
+		taskService.getUserStatusAndName(request);
+		return "createmodule";
+	}
+
+	@PostMapping("/createmodulereceiver")
+	public String moduleReceiver(@Valid @RequestBody ModuleCreation moduleCreation) throws IOException {
+		String fileName = taskService.createFileWithExtension(moduleCreation.getCatname(),
+				moduleCreation.getFileextension());
+		taskService.createModuleInFile(fileName, moduleCreation.getCatcode());
+		List<ParamSettingsDb> list = new ArrayList<>();
+
+		for (ParamSettings param : moduleCreation.getParams()) {
+			list.add(objMapper.mapParamSettings(param));
+		}
+
+		ModuleCreationDb moduleC = new ModuleCreationDb(moduleCreation.getLabel(), moduleCreation.getCatname(),
+				moduleCreation.getCatdes(), moduleCreation.getCatlink(), list);
+
+		moduleService.save(moduleC);
+
+		return "createmodule";
+	}
+
+	@GetMapping("/accessd")
+	public String accessd(HttpServletRequest request) {
+		return "accessd";
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/cfg-index")
+	public String wsIndex(HttpServletRequest request) throws ClassNotFoundException, IOException {
+		taskService.getUserStatusAndName(request);
+		request.setAttribute("filesNames", taskService.getFilesName());
+		request.setAttribute("mode", "WS_INDEX");
+		return "cfg-index";
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/test-display")
+	public String testIndex(HttpServletRequest request) throws ClassNotFoundException, IOException {
+		taskService.getUserStatusAndName(request);
+		request.setAttribute("mode", "TEST_INDEX");
+		return "test-display";
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PostMapping("/send-update")
+	public String updateTask(@Valid @RequestBody EditFileConfig editfile) throws IOException {
+		taskService.writeInfo(editfile.getBefore(),editfile.getAfter(),editfile.getFileName(),editfile.getTime());
+		return "cfg-index";
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PostMapping("/start-ws")
+	public String startWs(@RequestParam String name, String file, HttpServletRequest request)
+			throws IOException, ClassNotFoundException {
+		taskService.getUserStatusAndName(request);
+		request.setAttribute("name", name);
+		request.setAttribute("file", file);
+
+		request.setAttribute("info", taskService.findInfo(file));
+		request.setAttribute("mode", "MODE_FILES");
+		return "cfg-index";
+	}
+}
