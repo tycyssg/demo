@@ -97,8 +97,8 @@ function updateFile(id) {
 		url : "send-update",
 		contentType : "application/json",
 		data : {
-			after : lineAfter,
 			before : lineBefore,
+			after : lineAfter,
 			fileName : fileHidden.value,
 			time : timeNow
 		},
