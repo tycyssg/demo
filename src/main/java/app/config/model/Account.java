@@ -1,25 +1,20 @@
 package app.config.model;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.hibernate.annotations.Cascade;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,9 +22,8 @@ import app.config.util.Constants.AccountStatus;
 
 @Entity
 @Table(name = "Accounts")
-public class Account{
+public class Account {
 
-	
 	@Id
 	@Column(unique = true, name = "id", nullable = false)
 	private String id = UUID.randomUUID().toString().toUpperCase();
@@ -47,10 +41,10 @@ public class Account{
 	private String name;
 
 	private String surName;
-	
+
 	@Enumerated
 	private AccountStatus status;
-	
+
 	@Version
 	@JsonIgnore
 	private int version;
@@ -58,13 +52,13 @@ public class Account{
 	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "account_id")
 	public List<Role> roles;
-	
-	@OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="acc")
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "acc")
 	private AccountCompany accCompany;
 
-	@OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL, mappedBy = "account")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
 	public AccountUUID accUuid;
-	
+
 	public AccountUUID getAccUuid() {
 		return accUuid;
 	}
@@ -89,13 +83,13 @@ public class Account{
 		this.password = password;
 	}
 
-//	public Integer getId() {
-//		return id;
-//	}
-//
-//	public void setId(Integer id) {
-//		this.id = id;
-//	}
+	// public Integer getId() {
+	// return id;
+	// }
+	//
+	// public void setId(Integer id) {
+	// this.id = id;
+	// }
 
 	public int getVersion() {
 		return version;

@@ -1,8 +1,6 @@
 package app.config.model;
 
-import java.io.Serializable;
 import java.util.UUID;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,32 +9,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "ACCUUID")
-public class AccountUUID{
+public class AccountUUID {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(unique = true, name = "uuid_ref", nullable = false)
 	private String ref_UUID = UUID.randomUUID().toString().toUpperCase();
-	
+
 	@Column(unique = true, name = "uuid_company", nullable = false)
 	private String company_UUID = UUID.randomUUID().toString().toUpperCase();
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "acc_id")
-    private Account account;
+	private Account account;
 
-	
-	
-	
 	public Integer getId() {
 		return id;
 	}
@@ -69,7 +62,4 @@ public class AccountUUID{
 		this.account = account;
 	}
 
-
-	
-	
 }
