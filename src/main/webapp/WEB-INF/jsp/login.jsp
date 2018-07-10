@@ -106,7 +106,7 @@
 		</div>
 
 	</div>
-
+	
 	<div id="signupbox" style="display: none; margin-top: 50px"
 		class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 		<div class="panel panel-info">
@@ -120,13 +120,20 @@
 				</div>
 			</div>
 			<div class="panel-body">
-				<form:form id="signupform" class="form-horizontal" role="form"
-					action="" method="POST">
+				<form:form id="signupform" class="form-horizontal" role="form" action="registeracc" method="POST">
 
 					<div id="signupalert" style="display: none"
 						class="alert alert-danger">
 						<p>Error:</p>
 						<span></span>
+					</div>
+
+					<div class="form-group">
+						<label for="email" class="col-md-3 control-label">Username</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control" name="username"
+								placeholder="Username">
+						</div>
 					</div>
 
 					<div class="form-group">
@@ -137,49 +144,43 @@
 						</div>
 					</div>
 
-					<div class="form-group">
-						<label for="firstname" class="col-md-3 control-label">First
-							Name</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control" name="firstname"
-								placeholder="First Name">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="lastname" class="col-md-3 control-label">Last
-							Name</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control" name="lastname"
-								placeholder="Last Name">
-						</div>
-					</div>
+					
 					<div class="form-group">
 						<label for="password" class="col-md-3 control-label">Password</label>
 						<div class="col-md-9">
-							<input type="password" class="form-control" name="passwd"
-								placeholder="Password">
+							<input type="password" id="paw" class="form-control" name="password" placeholder="Password" onkeyup="checkPassStrenght()" onfocus="showValidation()" onblur="hideValidation()" >
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="icode" class="col-md-3 control-label">Invitation
-							Code</label>
+						<label for="password" class="col-md-3 control-label">Repeat Password</label>
 						<div class="col-md-9">
-							<input type="text" class="form-control" name="icode"
-								placeholder="">
+								<input type="password" id="pawCheck" class="form-control" name="passwordr" placeholder="Repeat Password" onkeyup="checkPassStrenght()" onfocus="showValidation()" onblur="hideValidation()" >
 						</div>
 					</div>
-
+					<div class="aro-pswd_info">
+				<div id="pswd_info">
+					<h4>Password must be requirements</h4>
+					<ul>
+						<li id="letter" class="invalid">At least <strong>one letter</strong></li>
+						<li id="capital" class="invalid">At least <strong>one capital letter</strong></li>
+						<li id="number" class="invalid">At least <strong>one number</strong></li>
+						<li id="length" class="invalid">Be at least <strong>8 characters</strong></li>
+						<li id="space" class="invalid">be<strong> use [~,!,@,#,$,%,^,&,*,-,=,.,;,']</strong></li>
+						<li id="passmatch" class="invalid">Match<strong> the password</strong></li>
+					</ul>
+				</div>
+				</div>
+				
+					
 					<div class="form-group">
 						<!-- Button -->
 						<div class="col-md-offset-3 col-md-9">
-							<button id="btn-signup" type="button" class="btn btn-info">
-								<i class="icon-hand-right"></i> &nbsp; Sign Up
-							</button>
-							<span style="margin-left: 8px;">or</span>
+							<input type="submit" id="submitRegForm" class="form-control" value="Submit" disabled>
 						</div>
 					</div>
-
+				<script src="${pageContext.request.contextPath}/static/js/passStrenght.js"></script>
+				
 					<div style="border-top: 1px solid #999; padding-top: 20px"
 						class="form-group">
 
@@ -198,5 +199,10 @@
 		</div>
 	</div>
 
+
+
+
+					
+				
 </body>
 </html>

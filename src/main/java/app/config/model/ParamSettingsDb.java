@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PARAMSETTINGSDB")
-
 public class ParamSettingsDb implements Serializable{
 
 

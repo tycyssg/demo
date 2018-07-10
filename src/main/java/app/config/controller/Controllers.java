@@ -20,6 +20,7 @@ import app.config.dto.ModuleCreation;
 import app.config.dto.ParamSettings;
 import app.config.model.ModuleCreationDb;
 import app.config.model.ParamSettingsDb;
+import app.config.service.AccountService;
 import app.config.service.CreateModuleService;
 import app.config.service.ObjectsMapper;
 import app.config.service.TaskService;
@@ -29,16 +30,21 @@ public class Controllers {
 
 	@Autowired
 	private TaskService taskService;
+	
+	@Autowired
+	private AccountService accountService;
 
 	@Autowired
 	private CreateModuleService moduleService;
 
 	@Autowired
 	private ObjectsMapper objMapper;
+	
+	
 
 	@GetMapping("/")
 	public String home(HttpServletRequest request) {
-		taskService.getUserStatusAndName(request);
+		accountService.getUserStatusAndName(request);
 		request.setAttribute("mode", "HOME");
 		return "index";
 	}
@@ -48,6 +54,11 @@ public class Controllers {
 		return "login";
 	}
 
+	@GetMapping("/testform")
+	public String test() {
+		return "testform";
+	}
+	
 	@GetMapping("/register")
 	public String register() {
 		return "register";
@@ -55,7 +66,7 @@ public class Controllers {
 
 	@GetMapping("/createModule")
 	public String createModule(HttpServletRequest request) {
-		taskService.getUserStatusAndName(request);
+		accountService.getUserStatusAndName(request);
 		return "createmodule";
 	}
 
@@ -86,7 +97,7 @@ public class Controllers {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/cfg-index")
 	public String wsIndex(HttpServletRequest request) throws ClassNotFoundException, IOException {
-		taskService.getUserStatusAndName(request);
+		accountService.getUserStatusAndName(request);
 		request.setAttribute("filesNames", taskService.getFilesName());
 		request.setAttribute("mode", "WS_INDEX");
 		return "cfg-index";
@@ -95,7 +106,7 @@ public class Controllers {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/test-display")
 	public String testIndex(HttpServletRequest request) throws ClassNotFoundException, IOException {
-		taskService.getUserStatusAndName(request);
+		accountService.getUserStatusAndName(request);
 		request.setAttribute("mode", "TEST_INDEX");
 		return "test-display";
 	}
@@ -111,7 +122,7 @@ public class Controllers {
 	@PostMapping("/start-ws")
 	public String startWs(@RequestParam String name, String file, HttpServletRequest request)
 			throws IOException, ClassNotFoundException {
-		taskService.getUserStatusAndName(request);
+		accountService.getUserStatusAndName(request);
 		request.setAttribute("name", name);
 		request.setAttribute("file", file);
 

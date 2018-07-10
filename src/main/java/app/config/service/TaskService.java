@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 import app.config.dto.InfoToUpdateTheFile;
 
 
-
-
 @Service
 public class TaskService{
 
@@ -91,18 +89,7 @@ public class TaskService{
 		return files;
 	}
 
-	public void getUserStatusAndName(HttpServletRequest request) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		 String currentUserName = "";
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-		     currentUserName = authentication.getName();
-		    
-		}
-		if(!(authentication instanceof AnonymousAuthenticationToken) && (authentication.isAuthenticated())) {
-			request.setAttribute("login", true);
-			request.setAttribute("userLogat", currentUserName);
-		}
-	}
+	
 	
 }
 
