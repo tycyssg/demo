@@ -2,6 +2,7 @@ package app.config.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,10 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,17 +27,12 @@ import app.config.util.Constants.AccountStatus;
 
 @Entity
 @Table(name = "Accounts")
-public class Account implements Serializable{
+public class Account{
 
-	@GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(columnDefinition = "CHAR(32)")
-	@Id
-	private String acc_UUID;
 	
-	//@GeneratedValue(strategy = GenerationType.AUTO)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Id
+	@Column(unique = true, name = "id", nullable = false)
+	private String id = UUID.randomUUID().toString().toUpperCase();
 
 	@Column(unique = true, nullable = false)
 	private String username;
@@ -50,10 +47,9 @@ public class Account implements Serializable{
 	private String name;
 
 	private String surName;
-
+	
 	@Enumerated
 	private AccountStatus status;
-	
 	
 	@Version
 	@JsonIgnore
@@ -62,22 +58,13 @@ public class Account implements Serializable{
 	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "account_id")
 	public List<Role> roles;
+	
+	@OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="acc")
+	private AccountCompany accCompany;
 
 	@OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL, mappedBy = "account")
 	public AccountUUID accUuid;
-
 	
-
-	
-
-	public String getAcc_UUID() {
-		return acc_UUID;
-	}
-
-	public void setAcc_UUID(String acc_UUID) {
-		this.acc_UUID = acc_UUID;
-	}
-
 	public AccountUUID getAccUuid() {
 		return accUuid;
 	}
@@ -102,13 +89,13 @@ public class Account implements Serializable{
 		this.password = password;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+//	public Integer getId() {
+//		return id;
+//	}
+//
+//	public void setId(Integer id) {
+//		this.id = id;
+//	}
 
 	public int getVersion() {
 		return version;
@@ -158,7 +145,21 @@ public class Account implements Serializable{
 		this.surName = surName;
 	}
 
+	public String getId() {
+		return id;
+	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public AccountCompany getAccCompany() {
+		return accCompany;
+	}
+
+	public void setAccCompany(AccountCompany accCompany) {
+		this.accCompany = accCompany;
+	}
 
 	@JsonIgnore
 	public String[] getAuthorities() {

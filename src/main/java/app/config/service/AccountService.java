@@ -16,8 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import app.config.model.Account;
+import app.config.model.AccountCompany;
 import app.config.model.AccountUUID;
 import app.config.model.Role;
+import app.config.repository.AccCompanyRepository;
+import app.config.repository.AccUuidRepository;
 import app.config.repository.AccountDAO;
 import app.config.util.Constants.AccountStatus;
 
@@ -31,34 +34,45 @@ public class AccountService {
 	@Autowired
 	private AccountDAO accDao;
 	
-//	@Autowired
-//	private AccountStatus status;
+	@Autowired
+	private AccCompanyRepository accCompany;
 	
+	@Autowired
+	private AccUuidRepository accUuid;
 
 	
 	public void saveSimpleAcc(String username,String email,String password) {
 		Account acc = new Account();
 		Role role = new Role();
 		Role role1 = new Role();
+		AccountCompany accComp  = new AccountCompany();
+		AccountUUID accountUuid = new AccountUUID();
+		accountUuid.setAccount(acc);
 		
 		List<Role> roles = new ArrayList<>();
-		
-		
-		acc.setUsername(username);
-		acc.setEmail(email);
-		acc.setPassword(passwordEncoder.encode(password));
-		acc.setStatus(AccountStatus.ONLINE);
-
 		role.setRole("ADMIN");
 		role1.setRole("CEO");
 		
 		roles.add(role1);
 		roles.add(role);
 		
-		acc.setAccUuid(new AccountUUID());
-		acc.setRoles(roles);
+		accComp.setAddress("test address");
+		accComp.setName("test name");
+		accComp.setAcc(acc);
 		
+		acc.setUsername(username);
+		acc.setEmail(email);
+		acc.setPassword(passwordEncoder.encode(password));
+		acc.setStatus(AccountStatus.ONLINE);
+		acc.setRoles(roles);
+	
+		accCompany.save(accComp);
 		accDao.save(acc);
+		accUuid.save(accountUuid);
+		accountUuid.setRef_UUID(accDao.findByUsername(username).getId());
+		accUuid.save(accountUuid);
+		
+
 	}
 	
 	

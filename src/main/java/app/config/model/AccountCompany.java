@@ -9,30 +9,30 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "ACC_COMPANY")
-public class AccountCompany implements Serializable{
+public class AccountCompany{
 	
-		
-		@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		Integer id;
 		String name;
 		String address;
 		
-		@GeneratedValue(generator = "uuid")
-	    @GenericGenerator(name = "uuid", strategy = "uuid")
-	    @Column(columnDefinition = "CHAR(32)")
-		@Id
-		String uuid;
+		@OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "account_id")
+		private Account acc;
+		 
 
-		@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "accCompany")
-		public AccountUUID accUuid;
-		
 		public Integer getId() {
 			return id;
 		}
@@ -57,13 +57,14 @@ public class AccountCompany implements Serializable{
 			this.address = address;
 		}
 
-		public String getUuid() {
-			return uuid;
+		public Account getAcc() {
+			return acc;
 		}
 
-		public void setUuid(String uuid) {
-			this.uuid = uuid;
+		public void setAcc(Account acc) {
+			this.acc = acc;
 		}
+
 		
 		
 }
