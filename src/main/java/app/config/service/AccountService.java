@@ -97,7 +97,6 @@ public class AccountService {
 		acc.setAccPersAddres(accAdd);
 		acc.setAccCompany(accComp);
 		
-		accountUuid.setRef_UUID(acc.getId());
 		accDao.save(acc);
 		
 		
@@ -130,7 +129,7 @@ public class AccountService {
 			newInvitedAcc.setRoles(Arrays.asList(role));
 			
 			AccountUUID accountUuid = new AccountUUID();
-			accountUuid.setCompany_UUID(acc.getAccUuid().getCompany_UUID());
+			//accountUuid.setCompany_UUID(acc.getAccUuid().getCompany_UUID());
 			accountUuid.setAccount(newInvitedAcc);
 			
 			AccountPersonalDetails accPers = new AccountPersonalDetails();
