@@ -58,6 +58,11 @@ public class AccountInvite {
 	public void setAccInvite(Account accInvite) {
 		this.account = accInvite;
 	}
+
+	@Override
+	public String toString() {
+		return "AccountInvite [id=" + id + ", timestamp=" + timestamp + ", hash=" + hash + ", account=" + account + "]";
+	}
 	
 	
 }

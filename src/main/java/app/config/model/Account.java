@@ -159,4 +159,13 @@ public class Account {
 		return authorities;
 	}
 
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", username=" + username + ", password=" + password + ", status=" + status
+				+ ", version=" + version + ", roles=" + roles + ", accCompany=" + accCompany + ", accUuid=" + accUuid
+				+ ", accpers=" + accpers + ", accPersAddres=" + accPersAddres + ", accInv=" + accInv + "]";
+	}
+
+	
+	
 }

@@ -105,47 +105,57 @@ public class AccountService {
 	
 	public void saveInvitedAcc(HttpServletRequest request,String username,String email,String password,String hashString) {
 		
-		AccountInvite accInv = accInviteRep.findByHashString(hashString);
-		Long currentTime = new Timestamp(System.currentTimeMillis()).getTime();
-		Long expired = currentTime - accInv.getTimestamp() / (1000 * 60 * 60 * 24);
-		Account acc = accInv.getAccInvite();
+		System.out.println("In save invited acc");
 		
-		if(expired > 10) {
-			request.setAttribute("linkExpired", true);
-		}else {
-			
-			
+		AccountInvite accInv = accInviteRep.findByHashString(hashString);
+		Account acc = accInv.getAccInvite();
+		Account newInvitedAcc = new Account();
+//		//Expire Link
+//		Long currentTime = new Timestamp(System.currentTimeMillis()).getTime();
+//		Long expired = currentTime - accInv.getTimestamp() / (1000 * 60 * 60 * 24);
+//		
+//		
+//		if(expired > 10) {
+//			request.setAttribute("linkExpired", true);
+//			
+//		}else {
+//				
 			Role role = new Role();
-			role.setRole("ADMIN");
+			role.setRole("USER");
 			
-			acc.setUsername(username);
-			acc.setPassword(passwordEncoder.encode(password));
-			acc.setStatus(AccountStatus.ONLINE);
-			acc.setRoles(Arrays.asList(role));
+			newInvitedAcc.setId(acc.getAccUuid().getRef_UUID());
+			newInvitedAcc.setUsername(username);
+			newInvitedAcc.setPassword(passwordEncoder.encode(password));
+			newInvitedAcc.setStatus(AccountStatus.ONLINE);
+			newInvitedAcc.setRoles(Arrays.asList(role));
 			
 			AccountUUID accountUuid = new AccountUUID();
-			accountUuid.setAccount(acc);
+			accountUuid.setCompany_UUID(acc.getAccUuid().getCompany_UUID());
+			accountUuid.setAccount(newInvitedAcc);
 			
 			AccountPersonalDetails accPers = new AccountPersonalDetails();
 			accPers.setEmail(email);
-			accPers.setPersonalAccount(acc);
+			accPers.setPersonalAccount(newInvitedAcc);
 			
 			
 			AccountPersonalAddress accAdd = new AccountPersonalAddress();
-			accAdd.setAccAddress(acc);
+			accAdd.setAccAddress(newInvitedAcc);
 			
 			
 			AccountCompanyDetails accComp  = new AccountCompanyDetails();
-			accComp.setAcc(acc);
+			accComp.setAddress(acc.getAccCompany().getAddress());
+			accComp.setName(acc.getAccCompany().getName());
+			accComp.setAcc(newInvitedAcc);
 				
-			acc.setAccUuid(accountUuid);
-			acc.setAccpers(accPers);
-			acc.setAccPersAddres(accAdd);
-			acc.setAccCompany(accComp);
+			newInvitedAcc.setAccUuid(accountUuid);
+			newInvitedAcc.setAccpers(accPers);
+			newInvitedAcc.setAccPersAddres(accAdd);
+			newInvitedAcc.setAccCompany(accComp);
 			
-			accountUuid.setRef_UUID(acc.getId());
-			accDao.save(acc);
-		}
+			accDao.save(newInvitedAcc);
+			
+			System.out.println("Invited acc was created.");
+//		}
 		
 		
 		
@@ -184,7 +194,7 @@ public class AccountService {
 		
 		String userEmail = acc.getAccpers().getEmail();
 				
-		emailService.sendInvitation(email,urlGenerated,userEmail);
+		//emailService.sendInvitation(email,urlGenerated,userEmail);
 		accDao.save(acc);
 		
 		System.out.println("Invitation Generated");

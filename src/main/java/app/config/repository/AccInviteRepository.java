@@ -10,7 +10,7 @@ import app.config.model.AccountInvite;
 
 public interface AccInviteRepository extends JpaRepository<AccountInvite,Integer> {
 	
-	@Query("select acc from Account acc where hash= :hashString")
+	@Query("select acc from AccountInvite acc where hash= :hashString")
 	public AccountInvite findByHashString(@Param("hashString") String hashString);
 
 }
