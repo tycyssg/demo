@@ -13,17 +13,17 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ACC_COMPANY")
-public class AccountCompany {
+public class AccountCompanyDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
-	String name;
-	String address;
+	private Integer id;
+	private String name = null;
+	private String address = null;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "account_id")
-	private Account acc;
+	private Account account;
 
 	public Integer getId() {
 		return id;
@@ -50,11 +50,11 @@ public class AccountCompany {
 	}
 
 	public Account getAcc() {
-		return acc;
+		return account;
 	}
 
 	public void setAcc(Account acc) {
-		this.acc = acc;
+		this.account = acc;
 	}
 
 }

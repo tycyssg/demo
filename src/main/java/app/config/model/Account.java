@@ -14,8 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import app.config.util.Constants.AccountStatus;
@@ -35,13 +33,6 @@ public class Account {
 	@Column(nullable = false)
 	private String password;
 
-	@Column(unique = true, nullable = false)
-	private String email;
-
-	private String name;
-
-	private String surName;
-
 	@Enumerated
 	private AccountStatus status;
 
@@ -53,12 +44,22 @@ public class Account {
 	@JoinColumn(name = "account_id")
 	public List<Role> roles;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "acc")
-	private AccountCompany accCompany;
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+	private AccountCompanyDetails accCompany;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
 	public AccountUUID accUuid;
 
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+	public AccountPersonalDetails accpers;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+	public AccountPersonalAddress accPersAddres;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+	public AccountInvite accInv;
+	
+	
 	public AccountUUID getAccUuid() {
 		return accUuid;
 	}
@@ -82,14 +83,6 @@ public class Account {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	// public Integer getId() {
-	// return id;
-	// }
-	//
-	// public void setId(Integer id) {
-	// this.id = id;
-	// }
 
 	public int getVersion() {
 		return version;
@@ -115,30 +108,6 @@ public class Account {
 		this.roles = roles;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSurName() {
-		return surName;
-	}
-
-	public void setSurName(String surName) {
-		this.surName = surName;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -147,12 +116,38 @@ public class Account {
 		this.id = id;
 	}
 
-	public AccountCompany getAccCompany() {
+	public AccountCompanyDetails getAccCompany() {
 		return accCompany;
 	}
 
-	public void setAccCompany(AccountCompany accCompany) {
+	public void setAccCompany(AccountCompanyDetails accCompany) {
 		this.accCompany = accCompany;
+	}
+
+	public AccountPersonalDetails getAccpers() {
+		return accpers;
+	}
+
+	public void setAccpers(AccountPersonalDetails accpers) {
+		this.accpers = accpers;
+	}
+	
+	
+
+	public AccountPersonalAddress getAccPersAddres() {
+		return accPersAddres;
+	}
+
+	public void setAccPersAddres(AccountPersonalAddress accPersAddres) {
+		this.accPersAddres = accPersAddres;
+	}
+
+	public AccountInvite getAccInv() {
+		return accInv;
+	}
+
+	public void setAccInv(AccountInvite accInv) {
+		this.accInv = accInv;
 	}
 
 	@JsonIgnore

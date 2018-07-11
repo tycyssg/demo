@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "ACCUUID")
+@Table(name = "ACCOUNT_UUIDS")
 public class AccountUUID {
 
 	@Id
@@ -27,7 +27,7 @@ public class AccountUUID {
 	private String company_UUID = UUID.randomUUID().toString().toUpperCase();
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "acc_id")
+	@JoinColumn(name = "account_id")
 	private Account account;
 
 	public Integer getId() {

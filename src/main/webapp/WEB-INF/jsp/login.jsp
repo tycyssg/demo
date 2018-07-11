@@ -17,6 +17,11 @@
 				$('#loginbox').hide();
 				$('#signupbox').show();
 			}
+			var h = new URL(location.href).searchParams.get('hash');
+			
+			document.getElementById('hashInput').value = h;
+
+			
 		}
 	</script>
 	<div class="container">
@@ -127,7 +132,7 @@
 						<p>Error:</p>
 						<span></span>
 					</div>
-
+					<input type="hidden" name="hashString" id="hashInput"  />
 					<div class="form-group">
 						<label for="email" class="col-md-3 control-label">Username</label>
 						<div class="col-md-9">
