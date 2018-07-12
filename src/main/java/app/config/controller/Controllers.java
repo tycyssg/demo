@@ -49,10 +49,7 @@ public class Controllers {
 		return "index";
 	}
 
-	@GetMapping("/login")
-	public String login() {
-		return "login";
-	}
+
 
 	@GetMapping("/testform")
 	public String test() {

@@ -1,6 +1,6 @@
 package app.config.model;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +23,7 @@ public class AccountPersonalAddress {
 	private String country = null;
 	private String postCode = null;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
 

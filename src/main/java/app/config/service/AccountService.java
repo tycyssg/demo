@@ -1,7 +1,5 @@
 package app.config.service;
 
-
-
 import java.lang.reflect.Array;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -33,194 +31,162 @@ import app.config.repository.AccUuidRepository;
 import app.config.repository.AccountDAO;
 import app.config.util.Constants.AccountStatus;
 
-
 @Service
 public class AccountService {
-	
+
 	@Value("${web.url}")
 	private String baseUrl;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private AccountDAO accDao;
-	
+
 	@Autowired
 	private EmaiServiceImpl emailService;
-	
+
 	@Autowired
 	private AccInviteRepository accInviteRep;
-//	
-//	@Autowired
-//	private AccCompanyRepository accCompany;
-//	
-//	@Autowired
-//	private AccUuidRepository accUuid;
-//	
 
-//	
-//	@Autowired
-//	private AccPersonalDetailsRepository accPersonalDetailsRep;
-//	
-//	@Autowired
-//	private AccPersonalAddressRepository accPersonalAdd;
+	@Autowired
+	private AccCompanyRepository accCompany;
 
+	@Autowired
+	private AccUuidRepository accUuid;
 
-	public void saveSimpleAcc(String username,String email,String password) {
+	@Autowired
+	private AccPersonalDetailsRepository accPersonalDetailsRep;
+
+	@Autowired
+	private AccPersonalAddressRepository accPersonalAdd;
+
+	public void saveSimpleAcc(String username, String email, String password) {
 		Account acc = new Account();
 		Role role = new Role();
 		role.setRole("ADMIN");
-		
+
 		acc.setUsername(username);
 		acc.setPassword(passwordEncoder.encode(password));
 		acc.setStatus(AccountStatus.ONLINE);
 		acc.setRoles(Arrays.asList(role));
-		
+		accDao.save(acc);
+
 		AccountUUID accountUuid = new AccountUUID();
+		accountUuid.setRef_UUID(acc.getId());
 		accountUuid.setAccount(acc);
-		
+		accUuid.save(accountUuid);
+
 		AccountPersonalDetails accPers = new AccountPersonalDetails();
 		accPers.setEmail(email);
 		accPers.setPersonalAccount(acc);
-		
-		
+		accPersonalDetailsRep.save(accPers);
+
 		AccountPersonalAddress accAdd = new AccountPersonalAddress();
 		accAdd.setAccAddress(acc);
-		
-		
-		AccountCompanyDetails accComp  = new AccountCompanyDetails();
+		accPersonalAdd.save(accAdd);
+
+		AccountCompanyDetails accComp = new AccountCompanyDetails();
 		accComp.setAcc(acc);
-			
+		accCompany.save(accComp);
+
 		acc.setAccUuid(accountUuid);
 		acc.setAccpers(accPers);
 		acc.setAccPersAddres(accAdd);
 		acc.setAccCompany(accComp);
-		
-		accDao.save(acc);
-		
-		
+
 	}
-	
-	public void saveInvitedAcc(HttpServletRequest request,String username,String email,String password,String hashString) {
-		
-		System.out.println("In save invited acc");
-		
-		AccountInvite accInv = accInviteRep.findByHashString(hashString);
+
+	public void saveInvitedAcc(HttpServletRequest request, String username, String email, String password,
+			String hashString) {
+
+		AccountInvite accInv = accInviteRep.findByHash(hashString);
 		Account acc = accInv.getAccInvite();
 		Account newInvitedAcc = new Account();
-//		//Expire Link
-//		Long currentTime = new Timestamp(System.currentTimeMillis()).getTime();
-//		Long expired = currentTime - accInv.getTimestamp() / (1000 * 60 * 60 * 24);
-//		
-//		
-//		if(expired > 10) {
-//			request.setAttribute("linkExpired", true);
-//			
-//		}else {
-//				
+
+		// Expire Link
+		Long currentTime = new Timestamp(System.currentTimeMillis()).getTime();
+		Long expired = (currentTime - accInv.getTimestamp()) / (1000 * 60 * 60 * 24);
+
+		if (expired > 10) {
+			request.setAttribute("linkExpired", true);
+			accInviteRep.delete(accInv.getId());
+		} else {
+
 			Role role = new Role();
-			role.setRole("USER");
-			
-			newInvitedAcc.setId(acc.getAccUuid().getRef_UUID());
+			role.setRole("ADMIN");
+
 			newInvitedAcc.setUsername(username);
 			newInvitedAcc.setPassword(passwordEncoder.encode(password));
 			newInvitedAcc.setStatus(AccountStatus.ONLINE);
 			newInvitedAcc.setRoles(Arrays.asList(role));
-			
+			accDao.save(newInvitedAcc);
+
 			AccountUUID accountUuid = new AccountUUID();
-			//accountUuid.setCompany_UUID(acc.getAccUuid().getCompany_UUID());
+			accountUuid.setCompany_UUID(acc.getAccUuid().getCompany_UUID());
+			accountUuid.setRef_UUID(acc.getId());
 			accountUuid.setAccount(newInvitedAcc);
-			
+			accUuid.save(accountUuid);
+
 			AccountPersonalDetails accPers = new AccountPersonalDetails();
 			accPers.setEmail(email);
 			accPers.setPersonalAccount(newInvitedAcc);
-			
-			
+			accPersonalDetailsRep.save(accPers);
+
 			AccountPersonalAddress accAdd = new AccountPersonalAddress();
 			accAdd.setAccAddress(newInvitedAcc);
-			
-			
-			AccountCompanyDetails accComp  = new AccountCompanyDetails();
+			accPersonalAdd.save(accAdd);
+
+			AccountCompanyDetails accComp = new AccountCompanyDetails();
 			accComp.setAddress(acc.getAccCompany().getAddress());
 			accComp.setName(acc.getAccCompany().getName());
 			accComp.setAcc(newInvitedAcc);
-				
+			accCompany.save(accComp);
+
 			newInvitedAcc.setAccUuid(accountUuid);
 			newInvitedAcc.setAccpers(accPers);
 			newInvitedAcc.setAccPersAddres(accAdd);
 			newInvitedAcc.setAccCompany(accComp);
-			
-			accDao.save(newInvitedAcc);
-			
-			System.out.println("Invited acc was created.");
-//		}
-		
-		
-		
+
+		}
+
 	}
-	
-	
+
 	public void getUserStatusAndName(HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		 String currentUserName = "";
+		String currentUserName = "";
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-		     currentUserName = authentication.getName();
-		    
+			currentUserName = authentication.getName();
+
 		}
-		if(!(authentication instanceof AnonymousAuthenticationToken) && (authentication.isAuthenticated())) {
+		if (!(authentication instanceof AnonymousAuthenticationToken) && (authentication.isAuthenticated())) {
 			request.setAttribute("login", true);
 			request.setAttribute("userLogat", currentUserName);
 		}
 	}
-	
-	
-	public void inviteSomeone(String email,String username) {
+
+	public void inviteSomeone(String email, String username) {
 		Timestamp time = new Timestamp(System.currentTimeMillis());
-		
-		String hash =  UUID.randomUUID().toString().toUpperCase();
-		String urlGenerated = baseUrl+"login?register=newacc&hash="+hash;
-		
+
+		String hash = UUID.randomUUID().toString().toUpperCase();
+		String urlGenerated = baseUrl + "login?register=newacc&hash=" + hash;
+
 		Account acc = accDao.findByUsername(username);
-		
+
 		AccountInvite accInvite = new AccountInvite();
-		
+
 		accInvite.setHash(hash);
 		accInvite.setAccInvite(acc);
-		accInvite.setTimestamp(time.getTime());	
-		
+		accInvite.setTimestamp(time.getTime());
+
 		acc.setAccInv(accInvite);
-		
+
 		String userEmail = acc.getAccpers().getEmail();
-				
-		//emailService.sendInvitation(email,urlGenerated,userEmail);
-		accDao.save(acc);
-		
-		System.out.println("Invitation Generated");
+
+		emailService.sendInvitation(email,urlGenerated,userEmail);
+		accInviteRep.save(accInvite);
+
 		System.out.println(urlGenerated);
 	}
-	
-	
 
-	
-	
-	
-//	//pass hash
-//		public String refUUIDhash(String uuid) {
-//			String hasResult = "";
-//			try{
-//			MessageDigest md = MessageDigest.getInstance("MD5");
-//			md.update(uuid.getBytes());
-//			byte[] digest = md.digest();
-//			
-//			hasResult = DatatypeConverter.printHexBinary(digest).toUpperCase();
-//			
-//			}catch(NoSuchAlgorithmException e){
-//				e.printStackTrace();
-//			}
-//			return hasResult;
-//		}
-//		
-		
-	}
-
+}

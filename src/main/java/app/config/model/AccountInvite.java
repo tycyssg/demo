@@ -23,7 +23,7 @@ public class AccountInvite {
 	private Long timestamp;
 	private String hash;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
 

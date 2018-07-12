@@ -41,17 +41,32 @@
 					<div style="display: none" id="login-alert"
 						class="alert alert-danger col-sm-12"></div>
 
-					<c:if test="${param.error != null}">
+					<c:if test="${linkExpired eq true}">
+						<div class="alert alert-danger" role="alert">
+							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+							<strong>Your invitation has expired!</strong> Ask your friend to invite you again or
+							register yourself.
+						</div>
+					</c:if>
+
+				<c:if test="${param.error != null}">
 						<div class="alert alert-danger" role="alert">
 							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Invalid
 							Username or Password
 						</div>
 					</c:if>
-
+					
 					<c:if test="${param.logout != null}">
 						<div class="alert alert-success" role="alert">
 							<i class="fa fa-sign-out" aria-hidden="true"></i> You
 							successfully loged out!
+						</div>
+					</c:if>
+					
+					<c:if test="${accCreated eq true}">
+						<div class="alert alert-warning" role="alert">
+							<i class="fa fa-id-card-o" aria-hidden="true"></i> You
+							account was successfully created!
 						</div>
 					</c:if>
 

@@ -28,5 +28,4 @@
 
 <!-- Local JS -->
 <script src="${pageContext.request.contextPath}/static/js/menujs.js"></script>
-
 </head>

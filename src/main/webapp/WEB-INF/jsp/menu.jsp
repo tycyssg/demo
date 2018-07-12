@@ -50,7 +50,7 @@
         <c:when test="${login eq true}">
           <ul class="nav navbar-nav navbar-right" style="margin-top:7px;">
           <li>
-            <button class="btn btn-primary btn-md"><i class="fa fa-spinner fa-spin fa-fw"></i> Welcome ${userLogat} <%-- <sec:authentication property="principal.username" /> --%></button>&nbsp;&nbsp;&nbsp;
+         <button class="btn btn-primary btn-md"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="simpleUrl"><a href="cp"><strong>CPanel</strong> ${userLogat}&nbsp;&nbsp;</a></span></button>&nbsp;&nbsp;&nbsp;&nbsp;
           </li>
             <li>
             <form:form  action= "${pageContext.request.contextPath}/signout" method="post" >

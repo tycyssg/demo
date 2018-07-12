@@ -22,6 +22,7 @@ import app.config.util.Constants.AccountStatus;
 @Table(name = "Accounts")
 public class Account {
 
+
 	@Id
 	@Column(unique = true, name = "id", nullable = false)
 	private String id = UUID.randomUUID().toString().toUpperCase();
@@ -44,22 +45,23 @@ public class Account {
 	@JoinColumn(name = "account_id")
 	public List<Role> roles;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+	@OneToOne( mappedBy = "account")
 	private AccountCompanyDetails accCompany;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+	@OneToOne(mappedBy = "account")
 	public AccountUUID accUuid;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+	@OneToOne( mappedBy = "account")
 	public AccountPersonalDetails accpers;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+	@OneToOne( mappedBy = "account")
 	public AccountPersonalAddress accPersAddres;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+	@OneToOne(mappedBy = "account")
 	public AccountInvite accInv;
 	
 	
+
 	public AccountUUID getAccUuid() {
 		return accUuid;
 	}

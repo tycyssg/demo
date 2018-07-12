@@ -1,6 +1,6 @@
 package app.config.model;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +24,7 @@ public class AccountPersonalDetails {
 	private String phone = null;
 	
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
 

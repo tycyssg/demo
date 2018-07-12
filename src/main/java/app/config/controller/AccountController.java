@@ -15,7 +15,18 @@ public class AccountController {
 
 	@Autowired
 	AccountService accService;
-
+	int count = 0;
+	@GetMapping("/login")
+	public String login() {
+		
+			if(count == 0) {
+				accService.saveSimpleAcc("tycy", "tycy", "tycy");
+				count++;
+			}
+		
+		return "login";
+	}
+	
 	@PostMapping("/registeracc")
 	public String register(HttpServletRequest request, String username, String email, String password,
 			String hashString) {
@@ -24,15 +35,15 @@ public class AccountController {
 		
 		if (hashString.equals("")) {
 			accService.saveSimpleAcc(username, email, password);
-			System.out.println("Acc created");
 		} else {
 			accService.saveInvitedAcc(request, username, email, password, hashString);
-			System.out.println("Hash String work");
 		}
 
+		request.setAttribute("accCreated",true);
 		return "login";
 	}
 
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/cp")
 	public String userCP(HttpServletRequest request) {

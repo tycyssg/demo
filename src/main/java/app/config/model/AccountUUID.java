@@ -1,7 +1,6 @@
 package app.config.model;
 
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,13 +19,13 @@ public class AccountUUID {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(unique = true, name = "uuid_ref", nullable = false)
+	@Column( name = "uuid_ref", nullable = false)
 	private String ref_UUID = UUID.randomUUID().toString().toUpperCase();
 
-	@Column(unique = true, name = "uuid_company", nullable = false)
+	@Column(name = "uuid_company", nullable = false)
 	private String company_UUID = UUID.randomUUID().toString().toUpperCase();
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
 
