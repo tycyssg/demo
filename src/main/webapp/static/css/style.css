@@ -1,6 +1,33 @@
+*{
+	margin:0;
+	padding: 0;
+}
+
+html,body{
+	height: 100%;
+
+}
+
+#maincontainer{
+	min-height: 100%;
+}
+
+#mainContent{
+	overflow: auto;
+	padding-bottom: 300px;
+	margin-bottom:30px;
+}
+
+
+#footer{
+	position: relative;
+	height:290px;
+	margin-top: -298px;
+	clear: both;
+}
+
 @import
-	url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css)
-	;
+	url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
 
 .invisible-at-first {
 	display: none;
@@ -160,4 +187,69 @@ img {
 	color: #fff;
 }
 
-/*ew*/
+/*Footer*/
+.container-color-bar{
+background-color: #2f72a8;
+width:100%;
+color:#fff;
+height:60px;
+line-height:60px;
+font-size:20px;
+font-family:Garamond;
+
+}
+.social-list-footer{
+	margin-right:75px;
+}
+.social-list-footer li{
+	width:30px;
+	margin-left:35px;
+}
+
+.social-list-footer li > a{
+	color:#fff;
+	font-size:18px;
+	transition: color 0.5s ease;
+}
+
+.social-list-footer li > a:hover{
+	color:#000;
+}
+
+.container-links-footer{
+	background-color: #1c2331;
+	width:100%;
+	color:#fff;"
+	height:120px;
+}
+
+.container-links-footer hr {
+	border-color:#337ab7;
+	width:150px;
+	margin-left:0;
+}
+
+.container-links-footer a{
+	color:#fff;
+	transition: color 0.5s ease;
+}
+
+.container-links-footer a:hover{
+	color:#337ab7;
+	text-decoration: none;
+}
+
+.footer-copyright{
+	height:50px;
+	background-color: #000;
+	line-height: 50px;
+}
+
+.footer-copyright a{
+	transition: color 0.5s ease;
+	text-decoration: none;
+}
+
+.footer-copyright a:hover{
+	text-decoration: none;
+}

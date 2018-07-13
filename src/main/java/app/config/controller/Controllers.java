@@ -56,10 +56,7 @@ public class Controllers {
 		return "testform";
 	}
 	
-	@GetMapping("/register")
-	public String register() {
-		return "register";
-	}
+
 
 	@GetMapping("/createModule")
 	public String createModule(HttpServletRequest request) {
@@ -95,7 +92,9 @@ public class Controllers {
 	@GetMapping("/cfg-index")
 	public String wsIndex(HttpServletRequest request) throws ClassNotFoundException, IOException {
 		accountService.getUserStatusAndName(request);
-		request.setAttribute("filesNames", taskService.getFilesName());
+		if(taskService.getFilesName().size() > 0) {
+			request.setAttribute("filesNames", taskService.getFilesName());
+		}
 		request.setAttribute("mode", "WS_INDEX");
 		return "cfg-index";
 	}

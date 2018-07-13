@@ -41,6 +41,37 @@
 					<div style="display: none" id="login-alert"
 						class="alert alert-danger col-sm-12"></div>
 
+					<c:if test="${emptyUserOrMail eq true}">
+						<div class="alert alert-info" role="alert">
+							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+							<strong>Warning!</strong> You have the fill all inputs during the registration process.
+						</div>
+					</c:if>
+					
+				<c:if test="${specialChars eq true}">
+						<div class="alert alert-danger" role="alert">
+							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+							<strong>Error!</strong> Only letters and numbers are allowed!
+						</div>
+					</c:if>
+					<c:if test="${emailExist eq true}">
+						<div class="alert alert-danger" role="alert">
+							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+							<strong>Error!</strong> Your email already exist in our records!
+						</div>
+					</c:if>
+							<c:if test="${emailValid eq true}">
+						<div class="alert alert-danger" role="alert">
+							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+							<strong>Error!</strong> Your email is invalid!
+						</div>
+					</c:if>
+							<c:if test="${userExist eq true}">
+						<div class="alert alert-danger" role="alert">
+							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+							<strong>Error!</strong> User name already exist!
+						</div>
+					</c:if>
 					<c:if test="${linkExpired eq true}">
 						<div class="alert alert-danger" role="alert">
 							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>

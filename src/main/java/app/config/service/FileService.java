@@ -161,13 +161,18 @@ public void writeModuleCodeInFile(String fileLocationAndName,List<String> code) 
 
 	public  List<String> listFilesForFolder(final File folder) {
 		List<String> files = new ArrayList<>();
-	    for (final File fileEntry : folder.listFiles()) {
-	        if (fileEntry.isDirectory()) {
-	            listFilesForFolder(fileEntry);
-	        } else {
-	          files.add(fileEntry.getName());
-	        }
-	    }
+		try {
+			 for (final File fileEntry : folder.listFiles()) {
+			        if (fileEntry.isDirectory()) {
+			            listFilesForFolder(fileEntry);
+			        } else {
+			          files.add(fileEntry.getName());
+			        }
+			    }
+		}catch (NullPointerException e) {
+			
+		}
+		
 	    return files;
 	}
 }

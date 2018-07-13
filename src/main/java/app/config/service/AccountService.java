@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -189,4 +191,41 @@ public class AccountService {
 		System.out.println(urlGenerated);
 	}
 
+	
+	public boolean checkIfMailExist(String email) {
+	boolean exist = false;
+		if(accPersonalDetailsRep.findByEmail(email) != null) {
+			exist = true;
+		}
+		return exist;
+	}
+	
+	public boolean checkIfUserExist(String user) {
+		boolean exist = false;
+		if(accDao.findByUsername(user) != null) {
+			exist = true;
+		}
+		return exist;
+	}
+	
+	public boolean checkIfMailIsValid(String email) {
+		boolean exist = false;
+		if(isValidEmailAddress(email)) {
+			exist = true;
+		}
+		return exist;
+	}
+	
+	
+	//email validation method
+	public static boolean isValidEmailAddress(String email) {
+		   boolean result = true;
+		   try {
+		      InternetAddress emailAddr = new InternetAddress(email);
+		      emailAddr.validate();
+		   } catch (AddressException ex) {
+		      result = false;
+		   }
+		   return result;
+		}
 }
