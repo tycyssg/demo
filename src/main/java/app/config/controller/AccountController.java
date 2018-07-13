@@ -1,8 +1,6 @@
 package app.config.controller;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +23,7 @@ public class AccountController {
 	public String login() {
 
 		if (count == 0) {
-			accService.saveSimpleAcc("tycy", "tycy", "tycy");
+			accService.saveAcc("tycy", "tycy", "tycy");
 			count++;
 		}
 
@@ -37,38 +35,42 @@ public class AccountController {
 		return "register";
 	}
 
+	boolean called = false;
+
 	@PostMapping("/registeracc")
 	public String register(HttpServletRequest request, String username, String email, String password,
 			String hashString) {
+		called = false;
 		Pattern p = Pattern.compile("[^A-Za-z0-9]");
-		Matcher m = p.matcher(username);
-		Matcher m1 = p.matcher(email);
-		boolean b = m.find();
-		boolean e = m1.find();
+		boolean b = p.matcher(username).find();
+		boolean e = p.matcher(email).find();
 
-		if (username == null || email == null || username.trim().isEmpty() || email.trim().isEmpty()) {
-			request.setAttribute("emptyUserOrMail", true);
-		} else if (b || e) {
-			request.setAttribute("specialChars", true);
-		} else {
-			if (accService.checkIfMailExist(email)) {
-				request.setAttribute("emailExist", true);
-			} else if (!accService.checkIfMailExist(email)) {
-				request.setAttribute("emailValid", true);
-			} else if (accService.checkIfUserExist(username)) {
-				request.setAttribute("userExist", true);
+		handleVariable("emptyUserOrMail", isStringEmpty(username) || isStringEmpty(email), request);
+		handleVariable("specialChars", b || e, request);
+		handleVariable("emailExist", accService.checkIfMailExist(email), request);
+		handleVariable("emailValid", accService.checkIfMailIsValid(email), request);
+		handleVariable("userExist", accService.checkIfUserExist(email), request);
+
+		if (!called) {
+			if (hashString.equals("")) {
+				accService.saveAcc(username, email, password);
 			} else {
-
-				if (hashString.equals("")) {
-					accService.saveSimpleAcc(username, email, password);
-				} else {
-					accService.saveInvitedAcc(request, username, email, password, hashString);
-				}
-				request.setAttribute("accCreated", true);
+				accService.saveAcc(request, username, email, password, hashString);
 			}
+
+			request.setAttribute("accCreated", true);
 		}
 
 		return "login";
+	}
+
+	private boolean isStringEmpty(String incString) {
+		return (incString == null || incString.trim().isEmpty());
+	}
+
+	private void handleVariable(String name, boolean value, HttpServletRequest request) {
+		request.setAttribute(name, value);
+		called = true;
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

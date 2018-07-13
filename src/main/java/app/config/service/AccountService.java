@@ -63,7 +63,7 @@ public class AccountService {
 	@Autowired
 	private AccPersonalAddressRepository accPersonalAdd;
 
-	public void saveSimpleAcc(String username, String email, String password) {
+	public void saveAcc(String username, String email, String password) {
 		Account acc = new Account();
 		Role role = new Role();
 		role.setRole("ADMIN");
@@ -99,8 +99,7 @@ public class AccountService {
 
 	}
 
-	public void saveInvitedAcc(HttpServletRequest request, String username, String email, String password,
-			String hashString) {
+	public void saveAcc(HttpServletRequest request, String username, String email, String password, String hashString) {
 
 		AccountInvite accInv = accInviteRep.findByHash(hashString);
 		Account acc = accInv.getAccInvite();
@@ -113,44 +112,43 @@ public class AccountService {
 		if (expired > 10) {
 			request.setAttribute("linkExpired", true);
 			accInviteRep.delete(accInv.getId());
-		} else {
-
-			Role role = new Role();
-			role.setRole("ADMIN");
-
-			newInvitedAcc.setUsername(username);
-			newInvitedAcc.setPassword(passwordEncoder.encode(password));
-			newInvitedAcc.setStatus(AccountStatus.ONLINE);
-			newInvitedAcc.setRoles(Arrays.asList(role));
-			accDao.save(newInvitedAcc);
-
-			AccountUUID accountUuid = new AccountUUID();
-			accountUuid.setCompany_UUID(acc.getAccUuid().getCompany_UUID());
-			accountUuid.setRef_UUID(acc.getId());
-			accountUuid.setAccount(newInvitedAcc);
-			accUuid.save(accountUuid);
-
-			AccountPersonalDetails accPers = new AccountPersonalDetails();
-			accPers.setEmail(email);
-			accPers.setPersonalAccount(newInvitedAcc);
-			accPersonalDetailsRep.save(accPers);
-
-			AccountPersonalAddress accAdd = new AccountPersonalAddress();
-			accAdd.setAccAddress(newInvitedAcc);
-			accPersonalAdd.save(accAdd);
-
-			AccountCompanyDetails accComp = new AccountCompanyDetails();
-			accComp.setAddress(acc.getAccCompany().getAddress());
-			accComp.setName(acc.getAccCompany().getName());
-			accComp.setAcc(newInvitedAcc);
-			accCompany.save(accComp);
-
-			newInvitedAcc.setAccUuid(accountUuid);
-			newInvitedAcc.setAccpers(accPers);
-			newInvitedAcc.setAccPersAddres(accAdd);
-			newInvitedAcc.setAccCompany(accComp);
-
+			return;
 		}
+
+		Role role = new Role();
+		role.setRole("ADMIN");
+
+		newInvitedAcc.setUsername(username);
+		newInvitedAcc.setPassword(passwordEncoder.encode(password));
+		newInvitedAcc.setStatus(AccountStatus.ONLINE);
+		newInvitedAcc.setRoles(Arrays.asList(role));
+		accDao.save(newInvitedAcc);
+
+		AccountUUID accountUuid = new AccountUUID();
+		accountUuid.setCompany_UUID(acc.getAccUuid().getCompany_UUID());
+		accountUuid.setRef_UUID(acc.getId());
+		accountUuid.setAccount(newInvitedAcc);
+		accUuid.save(accountUuid);
+
+		AccountPersonalDetails accPers = new AccountPersonalDetails();
+		accPers.setEmail(email);
+		accPers.setPersonalAccount(newInvitedAcc);
+		accPersonalDetailsRep.save(accPers);
+
+		AccountPersonalAddress accAdd = new AccountPersonalAddress();
+		accAdd.setAccAddress(newInvitedAcc);
+		accPersonalAdd.save(accAdd);
+
+		AccountCompanyDetails accComp = new AccountCompanyDetails();
+		accComp.setAddress(acc.getAccCompany().getAddress());
+		accComp.setName(acc.getAccCompany().getName());
+		accComp.setAcc(newInvitedAcc);
+		accCompany.save(accComp);
+
+		newInvitedAcc.setAccUuid(accountUuid);
+		newInvitedAcc.setAccpers(accPers);
+		newInvitedAcc.setAccPersAddres(accAdd);
+		newInvitedAcc.setAccCompany(accComp);
 
 	}
 
@@ -185,47 +183,45 @@ public class AccountService {
 
 		String userEmail = acc.getAccpers().getEmail();
 
-		emailService.sendInvitation(email,urlGenerated,userEmail);
+		emailService.sendInvitation(email, urlGenerated, userEmail);
 		accInviteRep.save(accInvite);
 
 		System.out.println(urlGenerated);
 	}
 
-	
 	public boolean checkIfMailExist(String email) {
-	boolean exist = false;
-		if(accPersonalDetailsRep.findByEmail(email) != null) {
+		boolean exist = false;
+		if (accPersonalDetailsRep.findByEmail(email) != null) {
 			exist = true;
 		}
 		return exist;
 	}
-	
+
 	public boolean checkIfUserExist(String user) {
 		boolean exist = false;
-		if(accDao.findByUsername(user) != null) {
+		if (accDao.findByUsername(user) != null) {
 			exist = true;
 		}
 		return exist;
 	}
-	
+
 	public boolean checkIfMailIsValid(String email) {
 		boolean exist = false;
-		if(isValidEmailAddress(email)) {
+		if (!isValidEmailAddress(email)) {
 			exist = true;
 		}
 		return exist;
 	}
-	
-	
-	//email validation method
+
+	// email validation method
 	public static boolean isValidEmailAddress(String email) {
-		   boolean result = true;
-		   try {
-		      InternetAddress emailAddr = new InternetAddress(email);
-		      emailAddr.validate();
-		   } catch (AddressException ex) {
-		      result = false;
-		   }
-		   return result;
+		boolean result = true;
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			result = false;
 		}
+		return result;
+	}
 }
