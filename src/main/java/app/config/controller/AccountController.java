@@ -53,7 +53,7 @@ public class AccountController {
 		} else {
 			if (accService.checkIfMailExist(email)) {
 				request.setAttribute("emailExist", true);
-			} else if (accService.checkIfMailExist(email)) {
+			} else if (!accService.checkIfMailExist(email)) {
 				request.setAttribute("emailValid", true);
 			} else if (accService.checkIfUserExist(username)) {
 				request.setAttribute("userExist", true);

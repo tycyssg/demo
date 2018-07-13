@@ -42,7 +42,7 @@
 						class="alert alert-danger col-sm-12"></div>
 
 					<c:if test="${emptyUserOrMail eq true}">
-						<div class="alert alert-info" role="alert">
+						<div class="alert alert-warning" role="alert">
 							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 							<strong>Warning!</strong> You have the fill all inputs during the registration process.
 						</div>
@@ -109,14 +109,14 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
 								type="text" class="form-control" name="username" value=""
-								placeholder="username or email">
+								placeholder="username" required autofocus>
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-lock"></i></span> <input id="login-password"
 								type="password" class="form-control" name="password"
-								placeholder="password">
+								placeholder="password" required autofocus>
 						</div>
 
 
@@ -183,7 +183,7 @@
 						<label for="email" class="col-md-3 control-label">Username</label>
 						<div class="col-md-9">
 							<input type="text" class="form-control" name="username"
-								placeholder="Username">
+								placeholder="Username" required autofocus>
 						</div>
 					</div>
 
@@ -191,7 +191,7 @@
 						<label for="email" class="col-md-3 control-label">Email</label>
 						<div class="col-md-9">
 							<input type="text" class="form-control" name="email"
-								placeholder="Email Address">
+								placeholder="Email Address" required autofocus>
 						</div>
 					</div>
 
@@ -199,14 +199,14 @@
 					<div class="form-group">
 						<label for="password" class="col-md-3 control-label">Password</label>
 						<div class="col-md-9">
-							<input type="password" id="paw" class="form-control" name="password" placeholder="Password" onkeyup="checkPassStrenght()" onfocus="showValidation()" onblur="hideValidation()" >
+							<input type="password" id="paw" class="form-control" name="password" placeholder="Password" onkeyup="checkPassStrenght()" onfocus="showValidation()" onblur="hideValidation()" required autofocus >
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="password" class="col-md-3 control-label">Repeat Password</label>
 						<div class="col-md-9">
-								<input type="password" id="pawCheck" class="form-control" name="passwordr" placeholder="Repeat Password" onkeyup="checkPassStrenght()" onfocus="showValidation()" onblur="hideValidation()" >
+								<input type="password" id="pawCheck" class="form-control" name="passwordr" placeholder="Repeat Password" onkeyup="checkPassStrenght()" onfocus="showValidation()" onblur="hideValidation()" required autofocus>
 						</div>
 					</div>
 					<div class="aro-pswd_info">
