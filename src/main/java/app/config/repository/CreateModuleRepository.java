@@ -1,9 +1,9 @@
 package app.config.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import app.config.model.ModuleCreationDb;
 
-public interface CreateModuleRepository extends CrudRepository<ModuleCreationDb, Integer>{
+public interface CreateModuleRepository extends JpaRepository<ModuleCreationDb, Integer>{
 
 }

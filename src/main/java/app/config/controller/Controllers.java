@@ -22,6 +22,7 @@ import app.config.model.ModuleCreationDb;
 import app.config.model.ParamSettingsDb;
 import app.config.service.AccountService;
 import app.config.service.CreateModuleService;
+import app.config.service.ModuleUIService;
 import app.config.service.ObjectsMapper;
 import app.config.service.TaskService;
 
@@ -40,6 +41,9 @@ public class Controllers {
 	@Autowired
 	private ObjectsMapper objMapper;
 	
+	@Autowired
+	private ModuleUIService moduleUiService;
+	
 	
 
 	@GetMapping("/")
@@ -49,7 +53,28 @@ public class Controllers {
 		return "index";
 	}
 
-
+	@GetMapping("/modules")
+	public String modules(HttpServletRequest request) {
+		accountService.getUserStatusAndName(request);
+		moduleUiService.createModuleLabelUi(request);
+		return "modules";
+	}
+	
+	@GetMapping("/modulesUiCreate")
+	public String modulesUiCreate(HttpServletRequest request) {
+		accountService.getUserStatusAndName(request);
+		return "modulesuicreate";
+	}
+	
+	
+	@PostMapping("/modulesUireceive")
+	public String moduleUiReceiver(String creator,String friendlyName,String parentName) {
+		moduleUiService.addModuleUiLabel(creator, friendlyName, parentName);
+		System.out.println("Success " + creator +" - "+ friendlyName +" - "+ parentName);
+		return "redirect:" + "/modulesUiCreate";
+	}
+	
+	
 
 	@GetMapping("/testform")
 	public String test() {
