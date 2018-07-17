@@ -31,15 +31,18 @@
 	</script>
 	
 
-	<div class="container">
-    <div class="row">
+	
+    <div class="container text-center">
          <h1>Bootstrap Tree Menu Example</h1>
+         <hr>
 
     </div>
-</div>
+
+
+<div class="container" style="width:98%">
 <div class="row">
     <div class="col-md-3">
-        <div class="well">
+        <div class="well" style="width:300px;">
             <div>
                 <ul class="nav ">
                     <li>
@@ -136,7 +139,7 @@
         </div>
     </div>
 </div>
-
+</div>
 
 		</div>
 		<!-- ENd main -->

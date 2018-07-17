@@ -29,6 +29,8 @@ public class ModuleCreationDb implements Serializable {
 	@JoinColumn(name = "moduleCreationDb_id")
 	private List<ParamSettingsDb> params;
 
+	public ModuleCreationDb() {}
+	
 	public ModuleCreationDb(String label, String catname, String catdes, String catlink, List<ParamSettingsDb> params) {
 		this.label = label;
 		this.catname = catname;

@@ -24,11 +24,7 @@ function addFile() {
 	).appendTo('#divtoapp');
 
 }
-;
 
-function removeForm(id) {
-	$(id).empty();
-}
 
 function createModuleReceiver() {
 	
