@@ -1,8 +1,6 @@
 package app.config.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -14,16 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import app.config.dto.EditFileConfig;
-import app.config.dto.ModuleCreation;
-import app.config.dto.ParamSettings;
-import app.config.model.ModuleCreationDb;
-import app.config.model.ParamSettingsDb;
 import app.config.service.AccountService;
-import app.config.service.CreateModuleService;
-import app.config.service.ObjectsMapper;
 import app.config.service.TaskService;
+
 
 @Controller
 public class Controllers {
@@ -34,13 +26,8 @@ public class Controllers {
 	@Autowired
 	private AccountService accountService;
 
-	@Autowired
-	private CreateModuleService moduleService;
 
-	@Autowired
-	private ObjectsMapper objMapper;
-	
-	
+
 
 	@GetMapping("/")
 	public String home(HttpServletRequest request) {
@@ -50,38 +37,11 @@ public class Controllers {
 	}
 
 
-
 	@GetMapping("/testform")
 	public String test() {
 		return "testform";
 	}
 	
-
-
-	@GetMapping("/createModule")
-	public String createModule(HttpServletRequest request) {
-		accountService.getUserStatusAndName(request);
-		return "createmodule";
-	}
-
-	@PostMapping("/createmodulereceiver")
-	public String moduleReceiver(@Valid @RequestBody ModuleCreation moduleCreation) throws IOException {
-		String fileName = taskService.createFileWithExtension(moduleCreation.getCatname(),
-				moduleCreation.getFileextension());
-		taskService.createModuleInFile(fileName, moduleCreation.getCatcode());
-		List<ParamSettingsDb> list = new ArrayList<>();
-
-		for (ParamSettings param : moduleCreation.getParams()) {
-			list.add(objMapper.mapParamSettings(param));
-		}
-
-		ModuleCreationDb moduleC = new ModuleCreationDb(moduleCreation.getLabel(), moduleCreation.getCatname(),
-				moduleCreation.getCatdes(), moduleCreation.getCatlink(), list);
-
-		moduleService.save(moduleC);
-
-		return "createmodule";
-	}
 
 	@GetMapping("/accessd")
 	public String accessd(HttpServletRequest request) {

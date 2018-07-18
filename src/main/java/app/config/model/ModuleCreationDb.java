@@ -15,20 +15,21 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "MODULECREATIONDB")
-public class ModuleCreationDb implements Serializable{
+public class ModuleCreationDb implements Serializable {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String label;
 	private String catname;
 	private String catdes;
 	private String catlink;
-	@OneToMany(fetch=FetchType.EAGER,cascade = {CascadeType.ALL})
-	@JoinColumn(name="moduleCreationDb_id")
+	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@JoinColumn(name = "moduleCreationDb_id")
 	private List<ParamSettingsDb> params;
 
+	public ModuleCreationDb() {}
 	
 	public ModuleCreationDb(String label, String catname, String catdes, String catlink, List<ParamSettingsDb> params) {
 		this.label = label;
@@ -77,7 +78,6 @@ public class ModuleCreationDb implements Serializable{
 	public void setCatdes(String catdes) {
 		this.catdes = catdes;
 	}
-	
 
 	public Integer getId() {
 		return id;
