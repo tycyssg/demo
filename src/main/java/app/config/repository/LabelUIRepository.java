@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import app.config.model.ModuleUI;
+import app.config.model.LabelUI;
 
 @Repository
-public interface ModuleUIRepository extends JpaRepository<ModuleUI, Integer>{
+public interface LabelUIRepository extends JpaRepository<LabelUI, Integer>{
 
-	List<ModuleUI> findByParentLabel(String parentLabel);
+	List<LabelUI> findByParentLabel(String parentLabel);
 }

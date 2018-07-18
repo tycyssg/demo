@@ -23,8 +23,8 @@ import app.config.dto.ParamSettings;
 import app.config.model.ModuleCreationDb;
 import app.config.model.ParamSettingsDb;
 import app.config.service.AccountService;
-import app.config.service.CreateModuleService;
-import app.config.service.ModuleUIService;
+import app.config.service.ModuleService;
+import app.config.service.LabelUIService;
 import app.config.service.ObjectsMapper;
 import app.config.service.TaskService;
 
@@ -39,13 +39,13 @@ public class ModuleController {
 	private AccountService accountService;
 
 	@Autowired
-	private CreateModuleService moduleService;
+	private ModuleService moduleService;
 
 	@Autowired
 	private ObjectsMapper objMapper;
 	
 	@Autowired
-	private ModuleUIService moduleUiService;
+	private LabelUIService labelUiService;
 	
 	
 
@@ -53,7 +53,7 @@ public class ModuleController {
 	@GetMapping("/modules")
 	public String modules(HttpServletRequest request) {
 		accountService.getUserStatusAndName(request);
-		moduleUiService.createModuleLabelUi(request);
+		labelUiService.createModuleLabelUi(request);
 		return "modules";
 	}
 	
@@ -67,9 +67,9 @@ public class ModuleController {
 		
 		for(ParamSettingsDb param : params) {
 			paramsMap.put(param.getParamname(), param.getParamtype());
-			System.out.println(param.getParamname() +" == "+ param.getParamtype());
 		}
 		request.setAttribute("paramsMap", paramsMap);
+		request.setAttribute("paramId", id);
 		
 		return "modulesdisplay";
 	}
@@ -77,17 +77,8 @@ public class ModuleController {
 
 
 	@PostMapping("/moduledisplayreceiver")
-	public String moduleDisplayReceiver(@RequestBody Map<String,Object> paramsMap) {
-		
-		System.out.println("a primit pos-ul");
-		
-		 Iterator it = paramsMap.entrySet().iterator();
-		    while (it.hasNext()) {
-		        Map.Entry pair = (Map.Entry)it.next();
-		        System.out.println(pair.getKey() + " = " + pair.getValue());
-		        it.remove(); // avoids a ConcurrentModificationException
-		    }
-		
+	public String moduleDisplayReceiver(@RequestBody Map<String,Object> paramsMap) {	
+		moduleService.turnMapIntoList(paramsMap);
 		return "modulesdisplay";
 	}
 	
@@ -101,7 +92,7 @@ public class ModuleController {
 	
 	@PostMapping("/modulesUireceive")
 	public String moduleUiReceiver(String creator,String friendlyName,String parentName) {
-		moduleUiService.addModuleUiLabel(creator, friendlyName, parentName);
+		labelUiService.addModuleUiLabel(creator, friendlyName, parentName);
 		System.out.println("Success " + creator +" - "+ friendlyName +" - "+ parentName);
 		return "redirect:" + "/modulesUiCreate";
 	}

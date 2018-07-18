@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "MODULEUI")
-public class ModuleUI {
+@Table(name = "LABELUI")
+public class LabelUI {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

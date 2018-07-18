@@ -1,10 +1,7 @@
 package app.config.service;
 
-import java.lang.reflect.Array;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 import javax.mail.internet.AddressException;

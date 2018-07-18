@@ -18,11 +18,6 @@
 			<jsp:include page="menu.jsp" />
 
 	<script type="text/javascript">
-/* 	window.onload = function() { 
-	    $('label.tree-toggler').click(function () {
-	        $(this).parent().children('ul.tree').toggle(300);
-	    });
-	}; */
 	window.onload = function() { 
 	$('.tree-toggle').click(function () {
 		$(this).parent().children('ul.tree').toggle(200);
@@ -39,102 +34,31 @@
     </div>
 
 
+<%-- 	<c:forEach var='item' items='${labelsDisplay}'>
+	<p>Key + ${item.key}<br>
+    <c:forEach var='arrayItem' items='${item.value}' >
+   			<p> ${arrayItem}</p><br>
+    </c:forEach>
+</c:forEach> --%>
+
 <div class="container" style="width:98%">
 <div class="row">
     <div class="col-md-3">
         <div class="well" style="width:300px;">
             <div>
                 <ul class="nav ">
+                 <c:forEach var='item' items='${labelsDisplay}'>
                     <li>
-                        <label label-default="" class="tree-toggle nav-header">Bootstrap</label>
+                        <label label-default="" class="tree-toggle nav-header">${item.key}</label>
                         <ul class="nav  tree">
-                            <li><a href="#">JavaScript</a>
-
+                        <c:forEach var='arrayItem' items='${item.value}' >
+                            <li><a href="#">${arrayItem}</a></li>
+                            </c:forEach>
+							</ul>
                             </li>
-                            <li><a href="#">CSS</a>
-
-                            </li>
-                            <li>
-                                <label label-default="" class="tree-toggle nav-header">Buttons</label>
-                                <ul class="nav  tree">
-                                    <li><a href="#">Colors</a>
-
-                                    </li>
-                                    <li><a href="#">Sizes</a>
-
-                                    </li>
-                                    <li>
-                                        <label label-default="" class="tree-toggle nav-header">Forms</label>
-                                        <ul class="nav  tree">
-                                            <li><a href="#">Horizontal</a>
-
-                                            </li>
-                                            <li><a href="#">Vertical</a>
-
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                            <li class="divider"><hr style="border-color:#000"></li>
+                            </c:forEach>
                         </ul>
-                    </li>
-                    <li class="divider"><hr style="border-color:#000"></li>
-                    <li>
-                        <label label-default="" class="tree-toggle nav-header">Responsive</label>
-                        <ul class="nav  tree">
-                            <li><a href="#">Overview</a>
-
-                            </li>
-                            <li><a href="#">CSS</a>
-
-                            </li>
-                            <li>
-                                <label label-default="" class="tree-toggle nav-header">Media Queries</label>
-                                <ul class="nav  tree">
-                                    <li><a href="#">Text</a>
-
-                                    </li>
-                                    <li><a href="#">Images</a>
-
-                                    </li>
-                                    <li>
-                                        <label label-default="" class="tree-toggle nav-header">Mobile Devices</label>
-                                        <ul class="nav  tree">
-                                            <li><a href="#">iPhone</a>
-
-                                            </li>
-                                            <li><a href="#">Samsung</a>
-
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <label label-default="" class="tree-toggle nav-header">Coding</label>
-                                <ul class="nav  tree">
-                                    <li><a href="#">JavaScript</a>
-
-                                    </li>
-                                    <li><a href="#">jQuery</a>
-
-                                    </li>
-                                    <li>
-                                        <label label-default="" class="tree-toggle nav-header">HTML DOM</label>
-                                        <ul class="nav  tree">
-                                            <li><a href="#">DOM Elements</a>
-
-                                            </li>
-                                            <li><a href="#">Recursive</a>
-
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>

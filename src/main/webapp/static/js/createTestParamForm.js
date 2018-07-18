@@ -25,6 +25,9 @@ function addFile() {
 
 }
 
+function removeForm(id) {
+	$(id).empty();
+}
 
 function createModuleReceiver() {
 	

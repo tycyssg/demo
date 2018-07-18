@@ -37,6 +37,8 @@
 			<div class="container">
 			<script type="text/javascript" src="/static/js/moduleDisplayFormSender.js"></script>
 				<form:form class="form-horizontal" role="form" onsubmit="moduleDisplaySender(); return false;" id="moduleDisplayForm" >
+				<input type="hidden" name="username" value="${userLogat}" />
+				<input type="hidden" name="moduleID" value="${paramId}" />
 					<div class="row">
 						<div class="col-md-3"></div>
 						<div class="col-md-6">
@@ -116,12 +118,17 @@
 							<div class="form-group">
 								<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								  <div class="btn-group" data-toggle="buttons">
-													<label class="btn btn-primary active">
-											<input type="checkbox" autocomplete="off" checked name="${paramName.key}" >
-											<input type="hidden" name="${paramName.key}"  value="false" />
-											<span class="glyphicon glyphicon-ok"></span>
+			
+											<label class="btn btn-primary active">
+											<input type="radio" name="${paramName.key}" id="option2" autocomplete="off" checked value="true">
+											<span class="glyphicon glyphicon-ok">&nbsp;<small>True</small></span>
 										</label>
-									</div>
+							
+										<label class="btn btn-danger">
+											<input type="radio" name="${paramName.key}" id="option1" autocomplete="off" value="false">
+											<span class="glyphicon glyphicon-remove">&nbsp;<small>False</small></span>
+										</label>
+										</div>
 								</div>
 							</div>
 						</div>
@@ -145,7 +152,6 @@
 						<div class="col-sm-4" style="margin-left: -15px;">
 							<button type="submit" class="btn btn-success">
 								<i class="fa fa-plus-square" aria-hidden="true"></i> Create
-								Module
 							</button>
 						</div>
 					</div>
