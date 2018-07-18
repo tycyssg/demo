@@ -95,6 +95,7 @@ public class ModuleService {
 		StepsForTest step = new StepsForTest();
 		step.setModuleID(moduleId);
 		step.setUserUUID(userId);
+
 		saveStepsForTest(step);
 
 		return step;
