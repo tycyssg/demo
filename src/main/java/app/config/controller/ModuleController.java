@@ -50,11 +50,11 @@ public class ModuleController {
 	
 
 
-	@GetMapping("/modules")
+	@GetMapping("/labelsui")
 	public String modules(HttpServletRequest request) {
 		accountService.getUserStatusAndName(request);
 		labelUiService.createModuleLabelUi(request);
-		return "modules";
+		return "labelsui";
 	}
 	
 	@GetMapping("/modulesDisplay")

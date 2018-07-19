@@ -1,5 +1,6 @@
 package app.config.controller;
 
+import java.util.Map;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import app.config.model.AddUserDetails;
 import app.config.service.AccountService;
 
 @Controller
@@ -77,6 +80,8 @@ public class AccountController {
 	@GetMapping("/cp")
 	public String userCP(HttpServletRequest request) {
 		accService.getUserStatusAndName(request);
+		accService.getCurrentUserDetails(request,accService.getCurrentUser());
+		
 		return "cp";
 	}
 
@@ -88,4 +93,10 @@ public class AccountController {
 		return "cp";
 	}
 
+	@PostMapping("/adduserdetails")
+	public String addUserDetails(@RequestBody AddUserDetails userD,HttpServletRequest request) {
+		accService.addUserDetails(userD.getUsername(), userD.getName(), userD.getSurname(), userD.getPhone(),request);
+		return "cp";
+	}
+	
 }

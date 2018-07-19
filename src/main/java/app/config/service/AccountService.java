@@ -21,6 +21,7 @@ import app.config.model.AccountInvite;
 import app.config.model.AccountPersonalAddress;
 import app.config.model.AccountPersonalDetails;
 import app.config.model.AccountUUID;
+import app.config.model.AddUserDetails;
 import app.config.model.Role;
 import app.config.repository.AccCompanyRepository;
 import app.config.repository.AccInviteRepository;
@@ -29,6 +30,7 @@ import app.config.repository.AccPersonalDetailsRepository;
 import app.config.repository.AccUuidRepository;
 import app.config.repository.AccountDAO;
 import app.config.util.Constants.AccountStatus;
+
 
 @Service
 public class AccountService {
@@ -161,6 +163,16 @@ public class AccountService {
 			request.setAttribute("userLogat", currentUserName);
 		}
 	}
+	
+	public String getCurrentUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserName = "";
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			currentUserName = authentication.getName();
+
+		}
+		return currentUserName;
+	}
 
 	public void inviteSomeone(String email, String username) {
 		Timestamp time = new Timestamp(System.currentTimeMillis());
@@ -221,4 +233,31 @@ public class AccountService {
 		}
 		return result;
 	}
+	
+	public void addUserDetails(String username,String name,String surname,String phone,HttpServletRequest request) {
+		Account acc = accDao.findByUsername(username);
+		AccountPersonalDetails accP = acc.getAccpers();
+		accP.setName(name);
+		accP.setSurName(surname);
+		accP.setPhone(phone);
+		acc.setAccpers(accP);
+		accDao.save(acc);
+		
+		request.setAttribute("name", accP.getName());
+		request.setAttribute("surname", accP.getSurName());
+		request.setAttribute("phone", accP.getPhone());
+		
+	}
+	
+	public void getCurrentUserDetails(HttpServletRequest request,String username) {
+		Account acc = accDao.findByUsername(username);
+		AccountPersonalDetails accP = acc.getAccpers();
+		
+		request.setAttribute("name", accP.getName());
+		request.setAttribute("surname",accP.getSurName());
+		request.setAttribute("phone", accP.getPhone());
+	}
+	
 }
+
+

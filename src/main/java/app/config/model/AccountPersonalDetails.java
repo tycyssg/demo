@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+import app.config.util.Constants;
+
 @Entity
 @Table(name = "ACC_DETAILS")
 public class AccountPersonalDetails {
@@ -22,6 +25,7 @@ public class AccountPersonalDetails {
 	@Column(unique = true, nullable = false)
 	private String email;
 	private String phone = null;
+	private String accCreated = new Constants().currentDate();
 	
 	
 	@OneToOne
@@ -87,6 +91,26 @@ public class AccountPersonalDetails {
 
 	public void setPersonalAccount(Account personalAccount) {
 		this.account = personalAccount;
+	}
+
+
+	public String getAccCreated() {
+		return accCreated;
+	}
+
+
+	public void setAccCreated(String accCreated) {
+		this.accCreated = accCreated;
+	}
+
+
+	public Account getAccount() {
+		return account;
+	}
+
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 
