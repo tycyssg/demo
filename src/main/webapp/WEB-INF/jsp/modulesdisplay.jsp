@@ -8,9 +8,11 @@
 <jsp:include page="header.jsp" />
 
 <body>
+	
 	<div id="maincontainer">
 		<div id="mainContent">
 			<jsp:include page="menu.jsp" />
+			
 
 			<script type="text/javascript">
 	window.onload = function() { 

@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 import app.config.model.Account;
 import app.config.model.ModuleCreationDb;
 import app.config.model.ModuleUserParams;
+import app.config.model.StepsAndLinkedTo;
 import app.config.model.StepsForTest;
 import app.config.repository.AccountDAO;
 import app.config.repository.CreateModuleRepository;
 import app.config.repository.ModuleUserParamsRepository;
+import app.config.repository.StepsAndLinkedToRepository;
 import app.config.repository.StepsForTestRepository;
 
 @Service
@@ -34,6 +36,9 @@ public class ModuleService {
 
 	@Autowired
 	private StepsForTestRepository stepRepository;
+	
+	@Autowired
+	private StepsAndLinkedToRepository stepsAndLinkedRepository;
 
 	public List<ModuleCreationDb> findAllModules() {
 		List<ModuleCreationDb> modules = new ArrayList<>();
@@ -70,7 +75,6 @@ public class ModuleService {
 				Account acc = accRepository.findByUsername(pair.getValue().toString());
 				userId = acc.getId();
 			} else if (pair.getKey().equals("moduleID")) {
-				System.out.println(pair.getValue());
 				moduleId = Integer.valueOf(pair.getValue().toString());
 			} else {
 				if (!pair.getKey().equals("_csrf")) {
@@ -108,4 +112,37 @@ public class ModuleService {
 	public void saveModuleUserParams(List<ModuleUserParams> paramList) {
 		moduleRepository.save(paramList);
 	}
+	
+	public List<StepsForTest> findAllSteps(){
+		return stepRepository.findAll();
+	}
+	
+	public void extractStepsAndLinkedTo(Map<String, List<Object>> paramsMap) {
+		
+		List<String> listId = new ArrayList<>();
+		
+		Iterator it = paramsMap.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pair = (Map.Entry)it.next();
+	        if(pair.getKey().equals("arranged"));
+	        listId = (List<String>) pair.getValue();
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
+	    
+	    saveStepsAndLinkedToIn(listId);
+	}	
+	
+		public void saveStepsAndLinkedToIn(List<String> idList) {
+			int listLenght = idList.size();
+		
+			for(int i = 0; i < listLenght;i++) {
+				StepsAndLinkedTo steps = new StepsAndLinkedTo();
+				steps.setStepId(idList.get(i));
+				
+				if(i != listLenght-1) {
+					steps.setLinkedTo(idList.get(i+1));
+				}
+				stepsAndLinkedRepository.save(steps);
+			}
+		}
 }

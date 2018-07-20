@@ -21,7 +21,6 @@ import app.config.model.AccountInvite;
 import app.config.model.AccountPersonalAddress;
 import app.config.model.AccountPersonalDetails;
 import app.config.model.AccountUUID;
-import app.config.model.AddUserDetails;
 import app.config.model.Role;
 import app.config.repository.AccCompanyRepository;
 import app.config.repository.AccInviteRepository;

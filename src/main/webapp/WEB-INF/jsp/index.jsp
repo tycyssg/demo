@@ -6,6 +6,7 @@
 
 <html>
 <jsp:include page="header.jsp" />
+
 <body>
 	<div id="maincontainer">
 		<div id="mainContent">

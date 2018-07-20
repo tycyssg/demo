@@ -38,11 +38,6 @@
 
 (function($) {
 	
-//
-//	$( "li" ).each(function( index ) {
-//		  console.log( index + ": " + $( this ).text() );
-//		});
-	
 var dragging, placeholders = $();
 $.fn.sortable = function(options) {
 	var method = String(options);
@@ -122,17 +117,6 @@ $.fn.sortable = function(options) {
 })(jQuery);
 
 
-//window.onload = function() {
-//$.each($('.box-item'), function (index, value) { 
-//	  console.log(index + ':' + $(value).text()); 
-//	});
-//}
-
-function myTst(){
-	$.each($('.box-item'), function (index, value) { 
-		  console.log(index + ':' + $(value).text()); 
-		});
-}
 
 $(function() {
 			$('.sortable').sortable();
@@ -148,3 +132,51 @@ $(function() {
 			
 		
 		});
+
+
+/*Custom Functions */
+
+var afterArrangeArr = [];
+function myTst(){
+	$.each($('.box-item'), function (index, value) { 
+		afterArrangeArr.push($(value).text());
+		 
+		});
+	
+	 console.log(afterArrangeArr.toString());	
+	 
+	 sendSteps();	
+}
+
+
+function sendSteps() {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	 var myData = {
+		"arranged":afterArrangeArr
+		 }
+	 
+	$.ajax({
+		type : "POST",
+		url : "/arrangestepsandsave",
+		contentType : "application/json",
+		data : JSON.stringify(myData),
+		success : formSuccess(),
+		dataType : "json",
+		
+		async : true,
+		    beforeSend: function(xhr) {
+		        xhr.setRequestHeader("Accept", "application/json");
+		        xhr.setRequestHeader("Content-Type", "application/json");
+		        xhr.setRequestHeader(header, token);
+		    }
+	});
+}
+
+function formSuccess() {
+	$("#formSuccessDiv").empty();			 
+	$('<div class="alert alert-success" role="alert" >' +
+		'Steps successfully arranged' +
+		'</div>').appendTo("#formSuccessDiv")
+}

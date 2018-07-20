@@ -1,14 +1,12 @@
 .navbar{
-	background-color: #000;
 	border:0;
+	border-radius:0;
 }
-
 .navbar-brand { 
   width: 70px;
   height: 50px;
   background: url('http://www.sneaker-mission.com/uploads/3/1/2/7/31279819/5617441.png') no-repeat center center;
   background-size: 50px;  
-
 }
 
 .nav-tabs {
@@ -30,13 +28,14 @@
 .nav-list { border-bottom: px solid #eee; }
 .nav-list > li { 
   padding: 20px 15px 15px;
- 
 }
 
 .nav-list > li > a > img {
 	width:85px;
 	height:85px;
 }
+
+
 .nav-list > li:last-child { border-right: 0px solid #eee; }
 .nav-list > li > a:hover { text-decoration: none; }
 .nav-list > li > a > span {
@@ -77,22 +76,7 @@
 #login-dp .form-group {
     margin-bottom: 10px;
 }
-.btn-fb{
-    color: #fff;
-    background-color:#3b5998;
-}
-.btn-fb:hover{
-    color: #fff;
-    background-color:#496ebc 
-}
-.btn-tw{
-    color: #fff;
-    background-color:#55acee;
-}
-.btn-tw:hover{
-    color: #fff;
-    background-color:#59b5fa;
-}
+
 @media(max-width:768px){
     #login-dp{
         background-color: inherit;
@@ -140,11 +124,7 @@
     margin-right: auto;
     margin-left: auto;
     background-color: rgb(51,79,111);
-    
 }
-
-
-
 
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
@@ -182,6 +162,7 @@
 .nav-list > li {
     padding: 20px 15px 15px;
     border-left:0px;
+}
 .nav-list {
     border-bottom: 0px;
 }
@@ -197,9 +178,14 @@
     background-color: rgb(255, 255, 255);
     border: solid black 1px;
 }
-body
-{
-    padding-top: 20px;
+
+.homeCarousel{
+	margin-top:-20px;
+}
+	
+	 
+#myCarousel {
+	 box-shadow: 5px 5px 5px -2px #888;
 }
 #myCarousel .nav a small
 {
@@ -217,3 +203,11 @@ body
 .nav-pills>li[data-slide-to="1"].active a { background-color: #e67e22; }
 .nav-pills>li[data-slide-to="2"].active a { background-color: #2980b9; }
 .nav-pills>li[data-slide-to="3"].active a { background-color: #8e44ad; }
+
+/* .nav-carousel li{
+	-webkit-box-shadow: inset 0px 7px 3px -3px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow:    inset 0px 7px 3px -3px rgba(50, 50, 50, 0.5);
+    box-shadow:         inset 0px 7px 3px -3px rgba(50, 50, 50, 0.5);
+} */
+
+

@@ -1,6 +1,5 @@
 package app.config.model;
 
-import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PARAMSETTINGSDB")
-public class ParamSettingsDb implements Serializable{
+public class ParamSettingsDb{
 
 
 		@Id

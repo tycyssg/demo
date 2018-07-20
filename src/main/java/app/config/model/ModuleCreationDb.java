@@ -1,6 +1,5 @@
 package app.config.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "MODULECREATIONDB")
-public class ModuleCreationDb implements Serializable {
+public class ModuleCreationDb{
 
 	@Id
 	// @GeneratedValue(strategy = GenerationType.AUTO)

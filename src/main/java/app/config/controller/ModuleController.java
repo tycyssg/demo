@@ -48,6 +48,13 @@ public class ModuleController {
 	private LabelUIService labelUiService;
 	
 	
+	//Model to iterate trough maps
+//	Iterator it = idsMap.entrySet().iterator();
+//    while (it.hasNext()) {
+//        Map.Entry pair = (Map.Entry)it.next();
+//        System.out.println(pair.getKey() + " = " + pair.getValue());
+//        it.remove(); // avoids a ConcurrentModificationException
+//    }
 
 
 	@GetMapping("/labelsui")
@@ -55,6 +62,20 @@ public class ModuleController {
 		accountService.getUserStatusAndName(request);
 		labelUiService.createModuleLabelUi(request);
 		return "labelsui";
+	}
+	
+	@GetMapping("/testStepsOrder")
+	public String testStepsOrders(HttpServletRequest request) {
+		accountService.getUserStatusAndName(request);
+		request.setAttribute("testSteps", moduleService.findAllSteps());
+		return "teststeps";
+	}
+	
+	@PostMapping("/arrangestepsandsave")
+	public String arranegSteps(HttpServletRequest request,@RequestBody Map<String,List<Object>> idsMap) {
+		accountService.getUserStatusAndName(request);
+		moduleService.extractStepsAndLinkedTo(idsMap);
+		return "teststeps";
 	}
 	
 	@GetMapping("/modulesDisplay")

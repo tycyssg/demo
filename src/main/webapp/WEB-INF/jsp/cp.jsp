@@ -16,39 +16,12 @@
 			<div class="container content-center"
 				style="width: 100%; height: 100%;">
 				<div class="row">
-					<script
-						src="${pageContext.request.contextPath}/static/js/cpanelmenu.js"></script>
+					<script src="${pageContext.request.contextPath}/static/js/cpanelmenu.js"></script>
 					<div class="col-md-9 col-md-push-3  well admin-content" id="home"
 						style="width: 70%;">
 						<p>Hello! This is a forked snippet. It is for users, which use
 							one-page layouts.It is for users, which use one-page lIt is for
 							users, which use one-page lIt is for users, which use one-page l
-						</p>
-						<p>Hello! This is a forked snippet. It is for users, which use
-							one-page layouts.It is for users, which use one-page lIt is for
-							users, which use one-page lIt is for users, which use one-page l
-						</p>
-						<p>Hello! This is a forked snippet. It is for users, which use
-							one-page layouts.It is for users, which use one-page lIt is for
-							users, which use one-page lIt is for users, which use one-page l
-						</p>
-						<p>Hello! This is a forked snippet. It is for users, which use
-							one-page layouts.It is for users, which use one-page lIt is for
-							users, which use one-page lIt is for users, which use one-page l
-						</p>
-						<p>Hello! This is a forked snippet. It is for users, which use
-							one-page layouts.It is for users, which use one-page lIt is for
-							users, which use one-page lIt is for users, which use one-page l
-						</p>
-						<p>Hello! This is a forked snippet. It is for users, which use
-							one-page layouts.It is for users, which use one-page lIt is for
-							users, which use one-page lIt is for users, which use one-page l
-						</p>
-						<p>
-							Here's the original one from BhaumikPatel: <a
-								href="http://bootsnipp.com/snippets/featured/vertical-admin-menu"
-								target="_BLANK">Vertical Admin Menu</a> <br> Thank you
-							Baumik!
 						</p>
 					</div>
 					<div class="col-md-9 col-md-push-3  admin-content" id="settings" style="width: 70%;">

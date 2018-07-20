@@ -316,7 +316,8 @@ ul.kas-icon-aero li a:before{font-family: 'Glyphicons Halflings'; font-size:9px;
 }
 
 
-/*Drag and drop bootsnip */
+ /*Drag and drop bootsnip */
+ 
 .connected, .sortable, .exclude, .handles {
 margin: auto;
 padding: 0;
@@ -354,6 +355,7 @@ cursor: move;
 li.disabled {
 opacity: 0.5;
 }
+
 .sortable.grid li {
 line-height: 80px;
 float: left;
@@ -361,28 +363,24 @@ width: 80px;
 height: 80px;
 text-align: center;
 }
+
 li.highlight {
 background: #edede5;
 }
-#connected {
-width: 60%;
-overflow: hidden;
-margin: auto;
-}
+
 .connected {
-float: left;
-width: 48%;
-min-height:289px;
+overflow: hidden;
+width: 20%;
 background:#f6f6f6;
-margin:5px;
+margin: auto;
+margin-left:5px;
 }
-.connected.no2 {
-float: right;
-}
+
 .sortable-placeholder {
 background:#e8e8e8;
  padding: 10px 6px;
-}
+} 
+
 
 
 /*Panel Tab CP */
