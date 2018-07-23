@@ -25,12 +25,6 @@ public class AccountController {
 
 	@GetMapping("/login")
 	public String login() {
-
-		if (count == 0) {
-			accService.saveAcc("tycy", "tycy", "tycy");
-			count++;
-		}
-
 		return "login";
 	}
 
@@ -46,17 +40,19 @@ public class AccountController {
 		called = false;
 		Pattern p = Pattern.compile("[^A-Za-z0-9]");
 		boolean b = p.matcher(username).find();
-		boolean e = p.matcher(email).find();
 
 		handleVariable("emptyUserOrMail", isStringEmpty(username) || isStringEmpty(email), request);
-		handleVariable("specialChars", b || e, request);
+		handleVariable("specialChars", b,request);
 		handleVariable("emailExist", accService.checkIfMailExist(email), request);
 		handleVariable("emailValid", accService.checkIfMailIsValid(email), request);
-		handleVariable("userExist", accService.checkIfUserExist(email), request);
-
+		handleVariable("userExist", accService.checkIfUserExist(username), request);
+		
+		System.out.println("in the save method" + called+"=>"+b);
+		
 		if (!called) {
 			if (hashString.equals("")) {
 				accService.saveAcc(username, email, password);
+				System.out.println("after save method");
 			} else {
 				accService.saveAcc(request, username, email, password, hashString);
 			}

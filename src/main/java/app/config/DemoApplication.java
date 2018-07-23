@@ -14,7 +14,7 @@ public class DemoApplication {
 	}
 
 	
-	@Bean
+/*	@Bean
 	public Server h2Server() {
 	    Server server = new Server();
 	    try {
@@ -25,5 +25,5 @@ public class DemoApplication {
 	    }
 	    return server;
 
-	}
+	}*/
 }
