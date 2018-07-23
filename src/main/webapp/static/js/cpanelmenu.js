@@ -3,8 +3,16 @@ window.onload = function() {
     var navListItems = $('.admin-menu li');
     var allWells = $('.admin-content');
     var allWellsExceptFirst = $('.admin-content:not(:first)');
+
+    var s = new URL(location.href).searchParams.get('tab');
     
-    allWellsExceptFirst.hide();
+	if (s == "invite") {
+		allWells.hide();
+		$('#invite').show();
+	}else{
+		  allWellsExceptFirst.hide();
+	}
+	
     navItems.click(function(e)
     {
         e.preventDefault();

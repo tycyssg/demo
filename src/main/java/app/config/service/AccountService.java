@@ -21,6 +21,7 @@ import app.config.model.AccountInvite;
 import app.config.model.AccountPersonalAddress;
 import app.config.model.AccountPersonalDetails;
 import app.config.model.AccountUUID;
+import app.config.model.AddUserAddress;
 import app.config.model.Role;
 import app.config.repository.AccCompanyRepository;
 import app.config.repository.AccInviteRepository;
@@ -240,21 +241,42 @@ public class AccountService {
 		accP.setSurName(surname);
 		accP.setPhone(phone);
 		acc.setAccpers(accP);
-		accDao.save(acc);
-		
-		request.setAttribute("name", accP.getName());
-		request.setAttribute("surname", accP.getSurName());
-		request.setAttribute("phone", accP.getPhone());
-		
+		accDao.save(acc);		
 	}
+	
+	public void addUserAddress(AddUserAddress userAddress,HttpServletRequest request) {
+		Account acc = accDao.findByUsername(userAddress.getUsername());
+		AccountPersonalAddress accAddress = acc.getAccPersAddres();
+		
+		accAddress.setStreet_space_1(userAddress.getLine1());
+		accAddress.setStreet_space_2(userAddress.getLine2());
+		accAddress.setHouseNo(userAddress.getHouseNo());
+		accAddress.setCity(userAddress.getCity());
+		accAddress.setCounty(userAddress.getCounty());
+		accAddress.setPostCode(userAddress.getPostcode());
+		accAddress.setCountry(userAddress.getCountry());
+		acc.setAccPersAddres(accAddress);
+		accDao.save(acc);
+
+	}
+	
 	
 	public void getCurrentUserDetails(HttpServletRequest request,String username) {
 		Account acc = accDao.findByUsername(username);
 		AccountPersonalDetails accP = acc.getAccpers();
+		AccountPersonalAddress accAddress = acc.getAccPersAddres();
 		
 		request.setAttribute("name", accP.getName());
 		request.setAttribute("surname",accP.getSurName());
 		request.setAttribute("phone", accP.getPhone());
+		
+		request.setAttribute("line1", accAddress.getStreet_space_1());
+		request.setAttribute("line2", accAddress.getStreet_space_2());
+		request.setAttribute("house", accAddress.getHouseNo());
+		request.setAttribute("city", accAddress.getCity());
+		request.setAttribute("county", accAddress.getCounty());
+		request.setAttribute("postcode", accAddress.getPostCode());
+		request.setAttribute("country", accAddress.getCountry());
 	}
 	
 }

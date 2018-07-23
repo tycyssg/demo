@@ -44,7 +44,7 @@
 					<div class="row">
 						<div class="col-md-3"></div>
 						<div class="col-md-6">
-							<h2>Module display form!</h2>
+							<h3>Set the values for the module parameters</h3>
 							<hr>
 							<div id="formSuccessDiv"></div>
 
@@ -153,7 +153,7 @@
 						<div class="col-sm-4"></div>
 						<div class="col-sm-4" style="margin-left: -15px;">
 							<button type="submit" class="btn btn-success">
-								<i class="fa fa-plus-square" aria-hidden="true"></i> Create
+								<i class="fa fa-plus-square" aria-hidden="true"></i> Set Values
 							</button>
 						</div>
 					</div>

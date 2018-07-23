@@ -7,8 +7,6 @@
 <html>
 <jsp:include page="header.jsp" />
 <body>
-<script type="text/javascript" src="static/js/editUserDetails.js"></script>
-
 	<div id="maincontainer">
 		<div id="mainContent">
 			<jsp:include page="menu.jsp" />
@@ -47,12 +45,13 @@
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="tab1primary">Primary 1</div>
                         <div class="tab-pane fade" id="tab2primary"><!-- Tab2start-->
-                        
-                        <div class="container text-center" style="width:80%;"> 
-										<h3>Complete your personal details.</h3>
+                        <%-- <jsp:include page="addpersonaldetails.jsp" /> --%>
+                        <!-- Personal code in -->
+                        		 <div class="container text-center" style="width:80%;"> 
+										<h3>Add your personal details.</h3>
 										<hr>
 										<div id="formSuccessDiv"></div>
-										
+					<script type="text/javascript" src="static/js/editUserDetails.js"></script>					
 					<form:form class="form-horizontal" role="form"  id="addUserDetails" onsubmit="addUserDetails(); return false;" >
 					<input type="hidden" name="user" value="${userLogat}" />
 					<!-- Field Start -->
@@ -143,11 +142,217 @@
 						</div>
 					</div>
 				</form:form>	
+				<br /><!-- END details form -->	
+				
+				
+				<!-- Personal address code in -->
+										<h3>Add your address</h3>
+										<hr>
+										<div id="formSuccessDivAdd"></div>
+										
+					<form:form class="form-horizontal" role="form"  id="addUserAddress" onsubmit="addUserAddress(); return false;" >
+					<input type="hidden" name="user" value="${userLogat}" />
+					<!-- Field Start -->
+					<div class="row">
+						<div class="col-sm-4 field-label-responsive text-right">
+							<label for="line1">Line1</label>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+									<div class="input-group-addon" style="width: 10%">
+										<div style="width: 25px;">
+											<i class="fa fa-street-view" aria-hidden="true"></i>
+										</div>
+									</div>
+									<input type="text" name="line1" class="form-control" id="line1"
+										placeholder="Current Address: ${line1}" required autofocus>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-control-feedback">
+								<span class="text-danger align-middle"> <!-- Put name validation error messages here -->
+								</span>
+							</div>
+						</div>
+					</div>
+					<!-- Field End -->
+					<!-- Field Start -->
+					<div class="row">
+						<div class="col-sm-4 field-label-responsive text-right">
+							<label for="line2">Line 2</label>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+									<div class="input-group-addon" style="width: 10%">
+										<div style="width: 25px;">
+											<i class="fa fa-street-view" aria-hidden="true"></i>
+										</div>
+									</div>
+									<input type="text" name="line2" class="form-control"
+										id="line2" placeholder="Current Address: ${line2}" required autofocus>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-control-feedback">
+								<span class="text-danger align-middle"> <!-- Put name validation error messages here -->
+								</span>
+							</div>
+						</div>
+					</div>
+					<!-- Field End -->
+										<!-- Field Start -->
+					<div class="row">
+						<div class="col-sm-4 field-label-responsive text-right">
+							<label for="line2">House No/Name</label>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+									<div class="input-group-addon" style="width: 10%">
+										<div style="width: 25px;">
+											<i class="fa fa-home" aria-hidden="true"></i>
+										</div>
+									</div>
+									<input type="text" name="houseno" class="form-control"
+										id="houseno" placeholder="Current House: ${house}" required autofocus>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-control-feedback">
+								<span class="text-danger align-middle"> <!-- Put name validation error messages here -->
+								</span>
+							</div>
+						</div>
+					</div>
+					<!-- Field End -->
+					<!-- Field Start -->
+					<div class="row">
+						<div class="col-sm-4 field-label-responsive text-right">
+							<label for="city">City</label>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+									<div class="input-group-addon" style="width: 10%">
+										<div style="width: 25px;">
+											<i class="fa fa-building" aria-hidden="true"></i>
+										</div>
+									</div>
+									<input type="text" name="city" class="form-control"
+										id="city" placeholder="Current City: ${city}" required autofocus>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-control-feedback">
+								<span class="text-danger align-middle"> <!-- Put name validation error messages here -->
+								</span>
+							</div>
+						</div>
+					</div>
+					<!-- Field End -->
+					<!-- Field Start -->
+					<div class="row">
+						<div class="col-sm-4 field-label-responsive text-right">
+							<label for="city">State/County</label>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+									<div class="input-group-addon" style="width: 10%">
+										<div style="width: 25px;">
+											<i class="fa fa-flag-o" aria-hidden="true"></i>
+										</div>
+									</div>
+									<input type="text" name="county" class="form-control"
+										id="county" placeholder="Current County: ${county}" required autofocus>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-control-feedback">
+								<span class="text-danger align-middle"> <!-- Put name validation error messages here -->
+								</span>
+							</div>
+						</div>
+					</div>
+					<!-- Field End -->
+					<!-- Field Start -->
+					<div class="row">
+						<div class="col-sm-4 field-label-responsive text-right">
+							<label for="city">Postcode</label>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+									<div class="input-group-addon" style="width: 10%">
+										<div style="width: 25px;">
+											<i class="fa fa-product-hunt" aria-hidden="true"></i>
+										</div>
+									</div>
+									<input type="text" name="postcode" class="form-control"
+										id="postcode" placeholder="Current Postcode: ${postcode}" required autofocus>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-control-feedback">
+								<span class="text-danger align-middle"> <!-- Put name validation error messages here -->
+								</span>
+							</div>
+						</div>
+					</div>
+					<!-- Field End -->
+								<!-- Field Start -->
+					<div class="row">
+						<div class="col-sm-4 field-label-responsive text-right">
+							<label for="country">Country</label>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+									<div class="input-group-addon" style="width: 10%">
+										<div style="width: 25px;">
+										<i class="fa fa-flag" aria-hidden="true"></i>
+										</div>
+									</div>
+									<input type="text" name="country" class="form-control"
+										id="country" placeholder="Current Country: ${country}" required autofocus>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-control-feedback">
+								<span class="text-danger align-middle"> <!-- Put name validation error messages here -->
+								</span>
+							</div>
+						</div>
+					</div>
+					<!-- Field End -->
+					
+					<br />
+					<div class="row">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-4" style="margin-left: -90px;">
+							<button type="submit" class="btn btn-success">
+								<i class="fa fa-plus-square" aria-hidden="true"></i> Add address details
+							</button>
+						</div>
+					</div>
+				</form:form>	
 				<br />	
 					<div class="alert alert-info" role="alert">
-  		<strong>Info!</strong> Fill the form again if you want to change your details.
-							</div>
-										</div>
+  				<strong>Info!</strong> Fill the specific form again if the details has to be change.
+				</div><!-- END details form -->
+				<!-- Personal address code out -->
+				</div>
+                        <!-- personal details code out -->
+                        
                         
                         </div><!-- Tab2end -->
                         <div class="tab-pane fade" id="tab3primary">Primary 3</div>
@@ -158,10 +363,10 @@
             </div>
 
 						</div>
-
-
 					</div>
 					<!-- End settings -->
+					
+					
 					<div class="col-md-9 col-md-push-3  well admin-content" id="editp"
 						style="width: 70%;">
 						<p>Hello! This is a forked snippet. edit panel</p>
@@ -173,34 +378,74 @@
 						</p>
 					</div>
 
-					<div class="col-md-9 col-md-push-3  well admin-content" id="invite"
-						style="width: 70%;">
-						<p>Hello! This is a forked snippet. invite firend</p>
-						<p>
-							Here's the original one from BhaumikPatel: <a
-								href="http://bootsnipp.com/snippets/featured/vertical-admin-menu"
-								target="_BLANK">Vertical Admin Menu</a> <br> Thank you
-							Baumik!
-						</p>
+					<div class="col-md-9 col-md-push-3  well admin-content" id="invite" style="width: 70%;"><!-- Start invite tab -->
+
+					    <div class="container text-center" style="width:80%;"> 
+										<h3>Invite someone to join your team.</h3>
+										<hr>
+							<c:if test="${mailSent eq true}">
+						<div class="alert alert-success" role="alert">
+							<i class="fa fa-check" aria-hidden="true"></i>
+							<strong>Success!</strong> An invitation email was sent!
+						</div>
+						</c:if>
+							<c:if test="${mailInvalid eq true}">
+						<div class="alert alert-danger" role="alert">
+							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+							<strong>Warning!</strong> The email address is not valid!
+						</div>
+					</c:if>
+						
+						<form:form class="form-horizontal" role="form"  id="inviteSomeoneId" action="invitesomeone" method="POST" >
+					<input type="hidden" name="username" value="${userLogat}" />
+					<!-- Field Start -->
+					<div class="row">
+						<div class="col-sm-4 field-label-responsive text-right">
+							<label for="email">Next member email</label>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+									<div class="input-group-addon" style="width: 10%">
+										<div style="width: 25px;">
+											<i class="fa fa-envelope" aria-hidden="true"></i>
+										</div>
+									</div>
+									<input type="text" name="emailInvite" class="form-control" id="name"
+										placeholder="Email" required autofocus>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-control-feedback">
+								<span class="text-danger align-middle"> <!-- Put name validation error messages here -->
+								</span>
+							</div>
+						</div>
 					</div>
+					<!-- Field End -->
+					<br />
+					<div class="row">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-4" style="margin-left: -90px;">
+							<button type="submit" class="btn btn-success">
+								<i class="fa fa-plus-square" aria-hidden="true"></i> Invite member
+							</button>
+						</div>
+					</div>
+				</form:form>	
+				</div>		
+						
+					</div><!-- End invite tab -->
+					
+					
 					<div class="col-md-3 col-md-pull-9 pull-right"
 						style="width: 15%; margin-right: 7%;">
 						<ul class="nav nav-pills nav-stacked admin-menu">
-							<li class="active"><a href="#" data-target-id="home"><i
-									class="fa fa-home fa-fw"></i>Home</a></li>
-							<li><a href="#" data-target-id="settings"><i
-									class="fa fa-cogs fa-fw"></i>Settings</a></li>
-							<li><a href="#" data-target-id="editp"><i
-									class="fa fa-list-alt fa-fw"></i>Edit Profile</a></li>
-							<li><a href="#" data-target-id="invite"><i
-									class="fa fa-file-o fa-fw"></i>Invite to your team</a></li>
-							<!--<li><a href="#" data-target-id="charts"><i class="fa fa-bar-chart-o fa-fw"></i>Charts</a></li>
-                <li><a href="#" data-target-id="table"><i class="fa fa-table fa-fw"></i>Table</a></li>
-                <li><a href="#" data-target-id="forms"><i class="fa fa-tasks fa-fw"></i>Forms</a></li>
-                <li><a href="#" data-target-id="calender"><i class="fa fa-calendar fa-fw"></i>Calender</a></li>
-                <li><a href="#" data-target-id="library"><i class="fa fa-book fa-fw"></i>Library</a></li>
-                <li><a href="#" data-target-id="applications"><i class="fa fa-pencil fa-fw"></i>Applications</a></li> -->
-
+							<li class="${classCp}"><a href="#" data-target-id="home"><i class="fa fa-home fa-fw"></i>Home</a></li>
+							<li><a href="#" data-target-id="settings"><i class="fa fa-cogs fa-fw"></i>Settings</a></li>
+							<li><a href="#" data-target-id="editp"><i class="fa fa-list-alt fa-fw"></i>Edit Profile</a></li>
+							<li class="${classInv}"><a href="#" data-target-id="invite"><i class="fa fa-file-o fa-fw"></i>Invite to your team</a></li>
 						</ul>
 					</div>
 				</div>

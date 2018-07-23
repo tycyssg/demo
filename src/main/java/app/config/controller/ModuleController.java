@@ -64,6 +64,19 @@ public class ModuleController {
 		return "labelsui";
 	}
 	
+	//testing purpose only
+	@GetMapping("/test")
+	public String test(HttpServletRequest request) {
+		accountService.getUserStatusAndName(request);
+		return "test";
+	}
+	
+	@GetMapping("/testManager")
+	public String testManager(HttpServletRequest request) {
+		accountService.getUserStatusAndName(request);
+		return "testmanager";
+	}
+	
 	@GetMapping("/testStepsOrder")
 	public String testStepsOrders(HttpServletRequest request) {
 		accountService.getUserStatusAndName(request);

@@ -83,7 +83,7 @@
 				<c:if test="${param.error != null}">
 						<div class="alert alert-danger" role="alert">
 							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>Invalid
-							Username or Password
+							User name or Password
 						</div>
 					</c:if>
 					
@@ -96,7 +96,7 @@
 					
 					<c:if test="${accCreated eq true}">
 						<div class="alert alert-warning" role="alert">
-							<i class="fa fa-id-card-o" aria-hidden="true"></i> You
+							<i class="fa fa-id-card-o" aria-hidden="true"></i> Your
 							account was successfully created!
 						</div>
 					</c:if>

@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ACC_DETAIL_ADDRESS")
+@Table(name = "ACC_DETAILS_ADDRESS")
 public class AccountPersonalAddress {
 
 	@Id
@@ -19,6 +19,7 @@ public class AccountPersonalAddress {
 	private String street_space_1 = null;
 	private String street_space_2 = null;
 	private String houseNo = null;
+	private String county = null;
 	private String city = null;
 	private String country = null;
 	private String postCode = null;
@@ -89,6 +90,22 @@ public class AccountPersonalAddress {
 
 	public void setAccAddress(Account accAddress) {
 		this.account = accAddress;
+	}
+
+	public String getCounty() {
+		return county;
+	}
+
+	public void setCounty(String county) {
+		this.county = county;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 
