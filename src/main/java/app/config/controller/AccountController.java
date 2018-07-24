@@ -21,13 +21,24 @@ public class AccountController {
 	@Autowired
 	AccountService accService;
 
-	int count = 0;
 
+//	@GetMapping("/login")
+//	public String login() {
+//		return "login";
+//	}
+	
+	//H2 Login Only
+	int count = 0;
 	@GetMapping("/login")
 	public String login() {
+		if (count == 0) {
+			accService.saveAcc("tycy", "tycy", "tycy");
+			count++;
+		}
 		return "login";
 	}
 
+	
 	@GetMapping("/register")
 	public String register() {
 		return "register";
@@ -35,17 +46,17 @@ public class AccountController {
 
 	boolean called = false;
 	@PostMapping("/registeracc")
-	public String register(HttpServletRequest request, String username, String email, String password,
+	public String register(RedirectAttributes attributes, String username, String email, String password,
 			String hashString) {
 		called = false;
 		Pattern p = Pattern.compile("[^A-Za-z0-9]");
 		boolean b = p.matcher(username).find();
 
-		handleVariable("emptyUserOrMail", isStringEmpty(username) || isStringEmpty(email), request);
-		handleVariable("specialChars", b,request);
-		handleVariable("emailExist", accService.checkIfMailExist(email), request);
-		handleVariable("emailValid", accService.checkIfMailIsValid(email), request);
-		handleVariable("userExist", accService.checkIfUserExist(username), request);
+		handleVariable("emptyUserOrMail", isStringEmpty(username) || isStringEmpty(email), attributes);
+		handleVariable("specialChars", b,attributes);
+		handleVariable("emailExist", accService.checkIfMailExist(email), attributes);
+		handleVariable("emailValid", accService.checkIfMailIsValid(email), attributes);
+		handleVariable("userExist", accService.checkIfUserExist(username), attributes);
 		
 		System.out.println("in the save method" + called+"=>"+b);
 		
@@ -54,22 +65,24 @@ public class AccountController {
 				accService.saveAcc(username, email, password);
 				System.out.println("after save method");
 			} else {
-				accService.saveAcc(request, username, email, password, hashString);
+				accService.saveAcc(attributes, username, email, password, hashString);
 			}
-
-			request.setAttribute("accCreated", true);
+			System.out.println("near set attribute");
+			attributes.addFlashAttribute("accCreated", true);
 		}
 
-		return "login";
+		return "redirect:"+"/login";
 	}
 
 	private boolean isStringEmpty(String incString) {
 		return (incString == null || incString.trim().isEmpty());
 	}
 
-	private void handleVariable(String name, boolean value, HttpServletRequest request) {
-		request.setAttribute(name, value);
-		called = true;
+	private void handleVariable(String name, boolean value, RedirectAttributes attributes) {
+		if(value) {
+			called = true;
+		}
+		attributes.addFlashAttribute(name, value);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -93,8 +106,7 @@ public class AccountController {
 			attributes.addFlashAttribute("mailInvalid", true);
 			attributes.addFlashAttribute("classInvite", "active");
 		}
-		
-		
+
 		return "redirect:"+"/cp?tab=invite";
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.config.model.Account;
 import app.config.model.AccountCompanyDetails;
@@ -98,7 +99,7 @@ public class AccountService {
 
 	}
 
-	public void saveAcc(HttpServletRequest request, String username, String email, String password, String hashString) {
+	public void saveAcc(RedirectAttributes attributes, String username, String email, String password, String hashString) {
 
 		AccountInvite accInv = accInviteRep.findByHash(hashString);
 		Account acc = accInv.getAccInvite();
@@ -109,7 +110,7 @@ public class AccountService {
 		Long expired = (currentTime - accInv.getTimestamp()) / (1000 * 60 * 60 * 24);
 
 		if (expired > 10) {
-			request.setAttribute("linkExpired", true);
+			attributes.addFlashAttribute("linkExpired", true);
 			accInviteRep.delete(accInv.getId());
 			return;
 		}
