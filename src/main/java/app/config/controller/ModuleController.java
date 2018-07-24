@@ -64,12 +64,7 @@ public class ModuleController {
 		return "labelsui";
 	}
 	
-	//testing purpose only
-	@GetMapping("/test")
-	public String test(HttpServletRequest request) {
-		accountService.getUserStatusAndName(request);
-		return "test";
-	}
+
 	
 	@GetMapping("/testManager")
 	public String testManager(HttpServletRequest request) {
@@ -140,9 +135,9 @@ public class ModuleController {
 
 	@PostMapping("/createmodulereceiver")
 	public String moduleReceiver(@Valid @RequestBody ModuleCreation moduleCreation) throws IOException {
-		String fileName = taskService.createFileWithExtension(moduleCreation.getCatname(),
-				moduleCreation.getFileextension());
+		String fileName = taskService.createFileWithExtension(moduleCreation.getCatname(),moduleCreation.getFileextension());
 		taskService.createModuleInFile(fileName, moduleCreation.getCatcode());
+		
 		List<ParamSettingsDb> list = new ArrayList<>();
 
 		for (ParamSettings param : moduleCreation.getParams()) {
