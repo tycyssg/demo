@@ -8,13 +8,19 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import app.config.model.ReceiveNode;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import app.config.model.NodeChildren;
+import app.config.dto.ReceiveNode;
+import app.config.model.NewNode;
 import app.config.model.Node;
+import app.config.repository.NodeChildrenRepository;
 import app.config.repository.NodeRepository;
+import app.config.repository.NodeRepository2;
 import app.config.service.AccountService;
 
 
@@ -26,6 +32,13 @@ public class NodeController {
 
 	@Autowired
 	private NodeRepository nodeRep;
+	
+	@Autowired
+	private NodeRepository2 nodeRep2;
+	
+	
+	@Autowired
+	private NodeChildrenRepository nodeCRep;
 
 
 	
@@ -49,19 +62,52 @@ public class NodeController {
 	@PostMapping("/savenode")
 	public String saveNode(HttpServletRequest request,@RequestBody ReceiveNode node) {
 		accountService.getUserStatusAndName(request);
-		Node n = new Node();
-		NodeChildren nc = new NodeChildren();
-
-		List<NodeChildren> nlist = new ArrayList<>();
-		nlist.add(nc);
 		
-		n.setNodeName(node.getNodeName());
-		n.setChildrens(nlist);
-		nodeRep.save(n);
+		System.out.println(node.toString());
+		
+//		Node n = new Node();
+//		NodeChildren nc = new NodeChildren();
+//		List<NodeChildren> nlist = new ArrayList<>();
+//		nlist.add(nc);
+//		
+//		n.setNodeName(node.getNodeName());
+//		n.setChildrens(nlist);
+//		nodeRep.save(n);
+//		
+//		
+//		if(!node.getNodeFather().equals("")) {
+//			Node nodeUpd = nodeRep.findBynodeName(node.getNodeFather());
+//			Node newNode = nodeRep.findBynodeName(n.getNodeName());
+//			List<NodeChildren> nlistUpd = nodeUpd.getChildrens();
+//			NodeChildren ncUp = new NodeChildren();
+//
+//			ncUp.setChildrenId(newNode.getId());
+//            nlistUpd.add(ncUp);
+//            nodeUpd.setChildrens(nlistUpd);
+//			
+//            nodeRep.save(nodeUpd);
+//		}
 		
 		return "redirect:"+"/test";
 	}
 	
 	
 
+	//testing purpose only
+		@PostMapping("/createNewNode")
+		@ResponseBody
+		public String createNewNode() {
+			Node node = new Node();
+			NodeChildren nc = new NodeChildren();
+			List<NodeChildren> nlist = new ArrayList<>();
+			nlist.add(nc);
+			node.setChildrens(nlist);
+			nodeRep.save(node);
+			
+			String id = node.getId().toString();
+			
+			System.out.println("node id "+ id);
+			
+			return id;
+		}
 }

@@ -1,4 +1,4 @@
-package app.config.model;
+package app.config.dto;
 
 public class AddUserAddress {
 

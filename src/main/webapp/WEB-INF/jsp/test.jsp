@@ -68,86 +68,24 @@
 				</form:form>
 			</div> --%>
 			
-			<script type="text/javascript">
-			
-			function saveNode(id) {
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				
-				console.log($(id).val());
-				
-				nodeN = $(id).val();
-				$(id).val(nodeN);
-				var children = [];
-				
-				
-				
-				$.ajax({
-					type : "POST",
-					url : "/savenode",
-					contentType : "application/json",
-					data : JSON.stringify({
-						"nodeName" : nodeN,
-						"childrens" : children
-					}),
-					success : formSuccess(),
-					dataType : "json",
-					
-					async : true,
-					    beforeSend: function(xhr) {
-					        xhr.setRequestHeader("Accept", "application/json");
-					        xhr.setRequestHeader("Content-Type", "application/json");
-					        xhr.setRequestHeader(header, token);
-					    }
-				});
-			}
 
-			function formSuccess() {
-				$("#formSuccessDiv").empty();
-
-				$('<div class="alert alert-success" role="alert" >' +
-					'Details successfully added!' +
-					'</div>').appendTo("#formSuccessDiv")
-			}
-
-			var idCount = 0;
-			function addNewField(){
-				idCount++;
-				$(
-				'<div class="row">'+
-				'<div class="col-sm-8" style="padding-top:5px;" >'+
-				'<input type="text" name="nodeName" id="nodeId'+idCount+'"/>'+
-				'</div>'+
-				'<div class="col-sm-2">'+
-				'<button class="btn btn-primary btn-md" onclick="addNewField()" >'+
-					'<i class="fa fa-plus" aria-hidden="true"></i>'+
-				'</button>'+
-				'</div>'+
-				'<div class="col-sm-2">'+
-						'<button class="btn btn-success btn-md" onclick="saveNode(nodeId'+idCount+')" >'+
-						'<i class="fa fa-check" aria-hidden="true"></i>'+
-				'</button>'+
-				'</div>'+
-				'</div>'
-				).appendTo('#nodeappend');
-			}
-			</script>
-			
+	<script type="text/javascript" src="../static/js/newNode.js"></script>		
 	<div class="container" style="width:98%;padding:0;">
 	<div id="formSuccessDiv"></div>
 	<div class="row">
 		<div class="col-sm-2" style="border:1px solid black;">
 			<div class="row">
 			<div class="col-sm-8" style="padding-top:5px;" >
+			<input type="hidden" value="" id="fatherId" />
 			<input type="text" name="nodeName" id="nodeId0" />
 			</div>
 			<div class="col-sm-2">
-			<button class="btn btn-primary btn-md" onclick="addNewField()" >
+			<button class="btn btn-primary btn-md" onclick="createNewNode(fatherId)" >
 				<i class="fa fa-plus" aria-hidden="true"></i>
 			</button>
 			</div>
 			<div class="col-sm-2">
-					<button class="btn btn-success btn-md" onclick="saveNode(nodeId0)" >
+					<button class="btn btn-success btn-md" onclick="saveNode(nodeId0,fatherId)" >
 					<i class="fa fa-check" aria-hidden="true"></i>
 			</button>
 			</div>

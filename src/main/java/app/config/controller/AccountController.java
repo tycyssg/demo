@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import app.config.model.AddUserAddress;
-import app.config.model.AddUserDetails;
+import app.config.dto.AddUserAddress;
+import app.config.dto.AddUserDetails;
 import app.config.service.AccountService;
 
 @Controller
