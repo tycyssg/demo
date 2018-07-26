@@ -114,6 +114,13 @@ public class AccountPersonalDetails {
 	}
 
 
+	@Override
+	public String toString() {
+		return "AccountPersonalDetails [id=" + id + ", name=" + name + ", surName=" + surName + ", email=" + email
+				+ ", phone=" + phone + ", accCreated=" + accCreated + ", account=" + account + "]";
+	}
+
+
 
 	
 	

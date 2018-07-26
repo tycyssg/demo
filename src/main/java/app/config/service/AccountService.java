@@ -235,17 +235,19 @@ public class AccountService {
 		return result;
 	}
 	
-	public void addUserDetails(String username,String name,String surname,String phone,HttpServletRequest request) {
+	public void addUserDetails(String username,String name,String surname,String phone) {
 		Account acc = accDao.findByUsername(username);
 		AccountPersonalDetails accP = acc.getAccpers();
 		accP.setName(name);
 		accP.setSurName(surname);
 		accP.setPhone(phone);
 		acc.setAccpers(accP);
-		accDao.save(acc);		
+		accDao.save(acc);	
+		
+		//return accP;
 	}
 	
-	public void addUserAddress(AddUserAddress userAddress,HttpServletRequest request) {
+	public Account addUserAddress(AddUserAddress userAddress,HttpServletRequest request) {
 		Account acc = accDao.findByUsername(userAddress.getUsername());
 		AccountPersonalAddress accAddress = acc.getAccPersAddres();
 		
@@ -259,6 +261,7 @@ public class AccountService {
 		acc.setAccPersAddres(accAddress);
 		accDao.save(acc);
 
+		return acc;
 	}
 	
 	

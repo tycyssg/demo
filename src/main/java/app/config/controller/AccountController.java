@@ -9,10 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonAnyFormatVisitor;
 
 import app.config.dto.AddUserAddress;
 import app.config.dto.AddUserDetails;
+import app.config.model.Account;
+import app.config.model.AccountPersonalDetails;
 import app.config.service.AccountService;
 
 @Controller
@@ -89,7 +94,7 @@ public class AccountController {
 	@GetMapping("/cp")
 	public String userCP(HttpServletRequest request) {
 		accService.getUserStatusAndName(request);
-		accService.getCurrentUserDetails(request,accService.getCurrentUser());
+		//accService.getCurrentUserDetails(request,accService.getCurrentUser());
 		request.setAttribute("classCp", "active");
 		return "cp";
 	}
@@ -111,9 +116,13 @@ public class AccountController {
 	}
 
 	@PostMapping("/adduserdetails")
-	public String addUserDetails(@RequestBody AddUserDetails userD,HttpServletRequest request) {
-		accService.addUserDetails(userD.getUsername(), userD.getName(), userD.getSurname(), userD.getPhone(),request);
-		return "cp";
+	@ResponseBody
+	public String addUserDetails(@RequestBody AddUserDetails userD) {
+		 accService.addUserDetails(userD.getUsername(), userD.getName(), userD.getSurname(), userD.getPhone());
+		//System.out.println(acc.toString());
+//		String x = "{\"value\":\"d\"}";
+		String x = "wdqw";
+		return x.toString();
 	}
 	
 	@PostMapping("/adduseraddress")

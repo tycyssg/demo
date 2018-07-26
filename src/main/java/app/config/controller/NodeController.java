@@ -100,29 +100,23 @@ public class NodeController {
 		
 		System.out.println(node.toString());
 		
-//		Node n = new Node();
-//		NodeChildren nc = new NodeChildren();
-//		List<NodeChildren> nlist = new ArrayList<>();
-//		nlist.add(nc);
-//		
-//		n.setNodeName(node.getNodeName());
-//		n.setChildrens(nlist);
-//		nodeRep.save(n);
-//		
-//		
-//		if(!node.getNodeFather().equals("")) {
-//			Node nodeUpd = nodeRep.findBynodeName(node.getNodeFather());
-//			Node newNode = nodeRep.findBynodeName(n.getNodeName());
-//			List<NodeChildren> nlistUpd = nodeUpd.getChildrens();
-//			NodeChildren ncUp = new NodeChildren();
-//
-//			ncUp.setChildrenId(newNode.getId());
-//            nlistUpd.add(ncUp);
-//            nodeUpd.setChildrens(nlistUpd);
-//			
-//            nodeRep.save(nodeUpd);
-//		}
+	//	Node n = nodeRep.findOne(Integer.valueOf(node.getNodeId()));
+		Node n = new Node();
+		List<NodeChildren> nlistUpd = n.getChildrens();
 		
+		n.setId(Integer.valueOf(node.getNodeId()));
+		n.setNodeName(node.getNodeName());
+		
+		if(!node.getNodeFather().equals(node.getNodeId())) {
+			Node nf = nodeRep.findOne(Integer.valueOf(node.getNodeFather()));
+			NodeChildren ncUp = new NodeChildren();
+			ncUp.setChildrenId(nf.getId());
+			nlistUpd.add(ncUp);
+			n.setChildrens(nlistUpd);
+		}
+		
+		nodeRep.save(n);
+
 		return "redirect:"+"/test";
 	}
 	
@@ -142,7 +136,7 @@ public class NodeController {
 			String id = node.getId().toString();
 			
 			System.out.println("node id "+ id);
-			
+		
 			return id;
 		}
 }

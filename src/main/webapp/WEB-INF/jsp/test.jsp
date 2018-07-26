@@ -75,9 +75,8 @@
 		var list = ${nodeList};
 		$.each(list, function( index, value ) {
 			console.log(value);
-			addNewNode(value.id,value.id);
+			addNodeToLayout(value.id,value.id);
 			$(value.id).val(value.nodeName);
-			console.log("in list onload cu id "+value.id);
 		});
 		
 	});

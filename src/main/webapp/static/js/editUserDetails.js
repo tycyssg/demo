@@ -12,7 +12,14 @@ function addUserDetails() {
 			"surname" : $('[name="surname"]').val(),
 			"phone" : $('[name="phone"]').val()
 		}),
-		success : formSuccess(),
+		 success: function (data) {
+             
+             console.log("SUCCESS: ", data);
+         },
+         error: function (e) {
+             
+             console.log("ERROR: ", e);
+         },
 		dataType : "json",
 		
 		async : true,
@@ -24,13 +31,15 @@ function addUserDetails() {
 	});
 }
 
-function formSuccess() {
+function formSuccess(data) {
+	console.log("dwd");
+	
 	$("#formSuccessDiv").empty();
 	 document.getElementById("addUserDetails").reset();
-	 
+	
 	$('<div class="alert alert-success" role="alert" >' +
 		'Details successfully added!' +
-		'</div>').appendTo("#formSuccessDiv")
+		'</div>').appendTo("#formSuccessDiv");
 }
 
 

@@ -1,116 +1,98 @@
-var nodeList = [
-	{"id":1,"nodeName":"anyname","childrens":[5,6,7]},
-	{"id":2,"nodeName1":"anyname1","childrens":[5,6,7]},
-	{"id":3,"nodeName2":"anyname2","childrens":[5,6,7]}
-	]
+var finalTree = {};
 
-/*
-window.onload = function() {
-
-		var list = ${nodeList};
-		$.each(list, function( index, value ) {
-			alert( index + ": " + value );
-		});
+function populateWithNodes(){
+for (var nodeIdex = 0; nodeIdex < nodeList.length; nodeIdex++) {
+		//console.log(nodeList[nodeIdex]);
+	}
 }
-*/
 
-function saveNode(id,fatherId) {
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-					
-				var nodeN = $(id).val();
-				var nodeFather = $(fatherId).val();
-				
-				var children = [];
-				
-				console.log("Node Name"+nodeN);
-				console.log("Node Father"+nodeFather);
-				
-				$.ajax({
-					type : "POST",
-					url : "/savenode",
-					contentType : "application/json",
-					data : JSON.stringify({
-						"nodeName" : nodeN,
-						"nodeFather":nodeFather,
-						"childrens" : children
-					}),
-					success : formSuccess(),
-					dataType : "json",
-					
-					async : true,
-					    beforeSend: function(xhr) {
-					        xhr.setRequestHeader("Accept", "application/json");
-					        xhr.setRequestHeader("Content-Type", "application/json");
-					        xhr.setRequestHeader(header, token);
-					    }
-				});
-			}
+function createNewNode(fatherId){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+		
+	
+	$.ajax({
+		type : "POST",
+		url : "/createNewNode",
+		contentType : "application/json",
+		data : JSON.stringify({}),
+		success :function(data){
+			console.log(data);
+	        addNodeToLayout(data,fatherId)
+		},
+		dataType : "json",		
+		async : true,
+		    beforeSend: function(xhr) {
+		        xhr.setRequestHeader("Accept", "application/json");
+		        xhr.setRequestHeader("Content-Type", "application/json");
+		        xhr.setRequestHeader(header, token);
+		    }
+	});
+}
 
-			function formSuccess() {
-				$("#formSuccessDiv").empty();
 
-				$('<div class="alert alert-success" role="alert" >' +
-					'Details successfully added!' +
-					'</div>').appendTo("#formSuccessDiv")
-			}
+function formSuccess() {
+	$("#formSuccessDiv").empty();
 
-			
-			function addNewNode(idNode,father){
-				console.log("La inceput de addNewNode id"+idNode+" father"+father);
-				
-				var idFather;
-				if(isNaN(father)){
-					idFather = $(father).attr('id');
-					console.log("in the if "+idFather);
-				}else{
-					idFather = "idFather"+father;
-					console.log("in the else "+idFather);
-				}
-				
-				$(
-				'<div class="row">'+
-				'<div class="col-sm-8" style="padding-top:5px;" >'+
-				'<input type="hidden" name="fatherNode" value="'+idNode+'" id="'+idFather+'" />'+
-				'<input type="text" name="nodeName" id="nodeId'+idNode+'" />'+
-				'</div>'+
-				'<div class="col-sm-2">'+
-				'<button class="btn btn-primary btn-md" onclick="createNewNode('+idFather+')" >'+
-				'<i class="fa fa-plus" aria-hidden="true"></i>'+
+	$('<div class="alert alert-success" role="alert" >' +
+		'Details successfully added!' +
+		'</div>').appendTo("#formSuccessDiv")
+}
+
+
+function saveNode(idNode,idFather) {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
+	var nodeWeClickedOn = $("div[data-id-node='"+idNode+"'][data-id-father='"+idFather+"']");
+	console.log(nodeWeClickedOn);
+
+	var nodeName = $(nodeWeClickedOn).find('name="nodeName"').val();
+	
+	$.ajax({
+		type : "POST",
+		url : "/savenode",
+		contentType : "application/json",
+		data : JSON.stringify({
+			"idNode" : idNode,
+			"idFather":idFather,
+			"nodeName":nodeName,
+			"children" : []
+		}),
+		success : formSuccess(),
+		dataType : "json",
+		
+		async : true,
+		    beforeSend: function(xhr) {
+		        xhr.setRequestHeader("Accept", "application/json");
+		        xhr.setRequestHeader("Content-Type", "application/json");
+		        xhr.setRequestHeader(header, token);
+		    }
+	});
+}
+
+
+
+function addNodeToLayout(idNode,idFather){
+	console.log(idNode+"<=>"+idFather)
+	$('<div data-id-node="'+idNode+'" data-id-father="'+idFather+'">'+
+		'<div class="row">'+
+			'<div class="col-sm-8" style="padding-top:5px;" >'+
+				'<input type="text" name="nodeName"/>'+
+			'</div>'+
+
+			'<div class="col-sm-2">'+
+				'<button class="btn btn-primary btn-md" onclick="createNewNode('+idNode+')" >'+
+					'<i class="fa fa-plus" aria-hidden="true"></i>'+
 				'</button>'+
-				'</div>'+
-				'<div class="col-sm-2">'+
-						'<button class="btn btn-success btn-md" onclick="saveNode(nodeId'+idNode+','+idFather+')" >'+
-						'<i class="fa fa-check" aria-hidden="true"></i>'+
+			'</div>'+
+
+			'<div class="col-sm-2">'+
+				'<button class="btn btn-success btn-md" onclick="saveNode('+idNode+','+idFather+')" >'+
+					'<i class="fa fa-check" aria-hidden="true"></i>'+
 				'</button>'+
-				'</div>'+
-				'</div>'
-				).appendTo('#nodeappend');
-				
-				console.log("current value Hidden field "+$('[name="fatherNode"]').val());
-				console.log("trimit in save node nodeId"+idNode+","+idFather);
-			}
-			
-			function createNewNode(fatherId){
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-					
-				
-				$.ajax({
-					type : "POST",
-					url : "/createNewNode",
-					contentType : "application/json",
-					data : JSON.stringify({}),
-					success :function(data){
-				        addNewNode(data,fatherId)
-					},
-					dataType : "json",		
-					async : true,
-					    beforeSend: function(xhr) {
-					        xhr.setRequestHeader("Accept", "application/json");
-					        xhr.setRequestHeader("Content-Type", "application/json");
-					        xhr.setRequestHeader(header, token);
-					    }
-				});
-			}
-			
+			'</div>'+
+		'</div>'+
+	'</div>').appendTo('#nodeappend');
+
+}
