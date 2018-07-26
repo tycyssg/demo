@@ -121,8 +121,8 @@ public class AccountController {
 		 accService.addUserDetails(userD.getUsername(), userD.getName(), userD.getSurname(), userD.getPhone());
 		//System.out.println(acc.toString());
 //		String x = "{\"value\":\"d\"}";
-		String x = "wdqw";
-		return x.toString();
+		String x = "10";
+		return x;
 	}
 	
 	@PostMapping("/adduseraddress")
