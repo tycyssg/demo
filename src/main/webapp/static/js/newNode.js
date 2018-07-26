@@ -1,3 +1,19 @@
+var nodeList = [
+	{"id":1,"nodeName":"anyname","childrens":[5,6,7]},
+	{"id":2,"nodeName1":"anyname1","childrens":[5,6,7]},
+	{"id":3,"nodeName2":"anyname2","childrens":[5,6,7]}
+	]
+
+/*
+window.onload = function() {
+
+		var list = ${nodeList};
+		$.each(list, function( index, value ) {
+			alert( index + ": " + value );
+		});
+}
+*/
+
 function saveNode(id,fatherId) {
 				var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
@@ -5,7 +21,6 @@ function saveNode(id,fatherId) {
 				var nodeN = $(id).val();
 				var nodeFather = $(fatherId).val();
 				
-				$(id).val(nodeN);
 				var children = [];
 				
 				console.log("Node Name"+nodeN);
@@ -40,41 +55,40 @@ function saveNode(id,fatherId) {
 					'</div>').appendTo("#formSuccessDiv")
 			}
 
-
-			function addNewNode(id,father){
-				var previousNodeName;
-				var fatherId = father+id;
-
-				console.log($(father).val());
-				console.log(id);
-				console.log($(father).attr('id'));
+			
+			function addNewNode(idNode,father){
+				console.log("La inceput de addNewNode id"+idNode+" father"+father);
 				
-				if(father === "fatherId"){
-					previousNodeName = $(father).val();
-				}
-				else{
-					previousNodeName = $(fatherId).val();
+				var idFather;
+				if(isNaN(father)){
+					idFather = $(father).attr('id');
+					console.log("in the if "+idFather);
+				}else{
+					idFather = "idFather"+father;
+					console.log("in the else "+idFather);
 				}
 				
 				$(
 				'<div class="row">'+
 				'<div class="col-sm-8" style="padding-top:5px;" >'+
-				'<input type="hidden" name="fatherNode" value="'+previousNodeName+'" id="'+fatherId+'" />'+
-				'<input type="text" name="nodeName" id="nodeId'+id+'" />'+
+				'<input type="hidden" name="fatherNode" value="'+idNode+'" id="'+idFather+'" />'+
+				'<input type="text" name="nodeName" id="nodeId'+idNode+'" />'+
 				'</div>'+
 				'<div class="col-sm-2">'+
-				'<button class="btn btn-primary btn-md" onclick="createNewNode('+fatherId+')" >'+
+				'<button class="btn btn-primary btn-md" onclick="createNewNode('+idFather+')" >'+
 				'<i class="fa fa-plus" aria-hidden="true"></i>'+
 				'</button>'+
 				'</div>'+
 				'<div class="col-sm-2">'+
-						'<button class="btn btn-success btn-md" onclick="saveNode(nodeId'+id+','+fatherId+')" >'+
+						'<button class="btn btn-success btn-md" onclick="saveNode(nodeId'+idNode+','+idFather+')" >'+
 						'<i class="fa fa-check" aria-hidden="true"></i>'+
 				'</button>'+
 				'</div>'+
 				'</div>'
 				).appendTo('#nodeappend');
-
+				
+				console.log("current value Hidden field "+$('[name="fatherNode"]').val());
+				console.log("trimit in save node nodeId"+idNode+","+idFather);
 			}
 			
 			function createNewNode(fatherId){

@@ -67,33 +67,27 @@
 					</div> -->
 				</form:form>
 			</div> --%>
-			
 
-	<script type="text/javascript" src="../static/js/newNode.js"></script>		
+<script type="text/javascript" src="../static/js/newNode.js"></script>	
+<script>
+	$(document).ready(function() {
+
+		var list = ${nodeList};
+		$.each(list, function( index, value ) {
+			console.log(value);
+			addNewNode(value.id,value.id);
+			$(value.id).val(value.nodeName);
+			console.log("in list onload cu id "+value.id);
+		});
+		
+	});
+</script>
+	
 	<div class="container" style="width:98%;padding:0;">
 	<div id="formSuccessDiv"></div>
-	<div class="row">
-		<div class="col-sm-2" style="border:1px solid black;">
-			<div class="row">
-			<div class="col-sm-8" style="padding-top:5px;" >
-			<input type="hidden" value="" id="fatherId" />
-			<input type="text" name="nodeName" id="nodeId0" />
-			</div>
-			<div class="col-sm-2">
-			<button class="btn btn-primary btn-md" onclick="createNewNode(fatherId)" >
-				<i class="fa fa-plus" aria-hidden="true"></i>
-			</button>
-			</div>
-			<div class="col-sm-2">
-					<button class="btn btn-success btn-md" onclick="saveNode(nodeId0,fatherId)" >
-					<i class="fa fa-check" aria-hidden="true"></i>
-			</button>
-			</div>
-			</div>
-	</div>
 
 	<div class="col-sm-2" style="border:1px solid black;" id="nodeappend"></div>
-	</div>
+
 </div>
 			
 			

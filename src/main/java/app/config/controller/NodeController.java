@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import app.config.model.NodeChildren;
 import app.config.dto.ReceiveNode;
@@ -52,10 +55,42 @@ public class NodeController {
 //    }
 
 	//testing purpose only
+//	@GetMapping("/test")
+//	public String test(HttpServletRequest request) {
+//		accountService.getUserStatusAndName(request);
+//		
+//		return "test";
+//	}
+	
 	@GetMapping("/test")
-	public String test(HttpServletRequest request) {
-		accountService.getUserStatusAndName(request);
-		return "test";
+	public ModelAndView test(HttpServletRequest request) {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if(nodeRep.findAll().isEmpty()) {
+			//create First Node Object
+			Node node = new Node();
+			NodeChildren nc = new NodeChildren();
+			List<NodeChildren> nlist = new ArrayList<>();
+			nlist.add(nc);
+			node.setChildrens(nlist);
+			nodeRep.save(node);
+		}
+		
+		List<Node> nodeList = nodeRep.findAll();
+		ModelAndView model = new ModelAndView("test");
+		
+		String json = "";
+		try {
+			json = mapper.writeValueAsString(nodeList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addObject("nodeList", json);
+		
+		return model;
+		
+	
 	}
 	
 	//testing purpose only
