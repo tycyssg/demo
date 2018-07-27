@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonAnyFormatVisitor;
+import com.google.gson.Gson;
 
 import app.config.dto.AddUserAddress;
 import app.config.dto.AddUserDetails;
@@ -118,11 +119,12 @@ public class AccountController {
 	@PostMapping("/adduserdetails")
 	@ResponseBody
 	public String addUserDetails(@RequestBody AddUserDetails userD) {
-		 accService.addUserDetails(userD.getUsername(), userD.getName(), userD.getSurname(), userD.getPhone());
-		//System.out.println(acc.toString());
-//		String x = "{\"value\":\"d\"}";
-		String x = "10";
-		return x;
+		 AccountPersonalDetails acc = accService.addUserDetails(userD.getUsername(), userD.getName(), userD.getSurname(), userD.getPhone());
+		 
+		 Gson gson = new Gson();
+		 String accJson = gson.toJson(acc);
+		 
+		return accJson;
 	}
 	
 	@PostMapping("/adduseraddress")

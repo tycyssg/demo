@@ -235,7 +235,7 @@ public class AccountService {
 		return result;
 	}
 	
-	public void addUserDetails(String username,String name,String surname,String phone) {
+	public AccountPersonalDetails addUserDetails(String username,String name,String surname,String phone) {
 		Account acc = accDao.findByUsername(username);
 		AccountPersonalDetails accP = acc.getAccpers();
 		accP.setName(name);
@@ -244,7 +244,8 @@ public class AccountService {
 		acc.setAccpers(accP);
 		accDao.save(acc);	
 		
-		//return accP;
+		
+		return accP;
 	}
 	
 	public Account addUserAddress(AddUserAddress userAddress,HttpServletRequest request) {
